@@ -22,7 +22,7 @@ public class ListQueue {
     }
 
     //入队
-    public void ebqueue(int value){
+    public void enqueue(int value){
         //空
         if(head ==null){
             Node newNode = new Node(value);
@@ -34,8 +34,8 @@ public class ListQueue {
         }
     }
 
-//出队
-    public int ebqueue(){
+//出队,head出队
+    public int dequeue(){
         //空
         if(head ==null){
            return -1;

@@ -5,7 +5,7 @@ public class ArrayQueue {
     //数组
     private String[] items;
     //数组大小
-    private int n = 0;
+    private int n ;
 
     //队头下标
     private int head;
@@ -52,5 +52,4 @@ public class ArrayQueue {
         ++head;
         return value;
     }
-
 }
