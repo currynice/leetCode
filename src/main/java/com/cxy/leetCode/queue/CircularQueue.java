@@ -3,7 +3,7 @@ package com.cxy.leetCode.queue;
 /**
  * 循环队列,避免入队时数据搬移
  */
-public class CycleQueue {
+public class CircularQueue {
 
     private int[] items ;
 
@@ -13,7 +13,7 @@ public class CycleQueue {
 
     private int capacity;
 
-    public CycleQueue(int capacity) {
+    public CircularQueue(int capacity) {
         this.items = new int[capacity];
         this.capacity = capacity;
     }
@@ -25,6 +25,7 @@ public class CycleQueue {
             return false;
         }
         items[tail] = item;
+        //即tail = (tail+1)%capacity
         if(tail==capacity-1){
           tail = 0;
         }else{
@@ -42,6 +43,8 @@ public class CycleQueue {
         }
 
         int value = items[head];
+
+        //head = (head+1)%capacity
         if(head==capacity-1){
             head = 0;
         }else{

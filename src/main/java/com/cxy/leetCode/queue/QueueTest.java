@@ -1,7 +1,5 @@
 package com.cxy.leetCode.queue;
 
-import java.util.List;
-
 public class QueueTest {
 
     public static void main(String args[]){
@@ -40,7 +38,7 @@ public class QueueTest {
 //        System.out.println( "dequeue{5}" +listQueue.dequeue());
 //        System.out.println("dequeue{6}" + listQueue.dequeue());
 
-        CycleQueue cycleQueue = new CycleQueue(5);
+        CircularQueue cycleQueue = new CircularQueue(5);
         //入队,浪费一个空间
         System.out.println(cycleQueue.enqueue(1));
         System.out.println(cycleQueue.enqueue(2));

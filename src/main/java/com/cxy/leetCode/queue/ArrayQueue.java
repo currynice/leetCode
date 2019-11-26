@@ -27,7 +27,7 @@ public class ArrayQueue {
             if(head == 0){
                 return false;
             }
-            //数据搬移,head-tail -> 0- (tail-head)
+            //入队时数据搬移,head-tail -> 0- (tail-head)
             for(int i = head;i<tail;++i){
                 items[i-head] = items[i];
             }
