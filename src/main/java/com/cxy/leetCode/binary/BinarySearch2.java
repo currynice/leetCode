@@ -8,8 +8,6 @@ public class BinarySearch2 {
 
     public static int  binarySearch2(int[] a,int value){
         return bsearchInternally2(a,0,a.length-1,value);
-
-
     }
 
     //返回
