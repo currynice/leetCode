@@ -3,7 +3,7 @@ package com.cxy.leetCode.skipList;
 /**
  * 跳表，存储有序不重复的数据集和，基于链表+索引层 进行改造
  */
-public class SkipList {
+public class SkipList<E extends Comparable<? super E>> {
 
     //跳表更新索引数量概率
     private static final float SKIPLIST_P = 0.5f;
@@ -11,84 +11,93 @@ public class SkipList {
     //最高层数
     private static final int MAX_LEVEL = 16;
 
-    //当前层数
+    //当前层数,即有效层数
     private int levelCount = 1;
 
-    private Node head = new Node();  // 带头链表
+    private final  Node<E> head = new Node<E>(MAX_LEVEL,null);  // 带头链表
 
-    public Node find(int value) {
+    /**
+     * 跳表中是否包含
+     * @param val
+     * @return
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public Node find(int val) {
         Node p = head;
+        // 从最大层开始查找，找到前一节点，通过--i，移动到下层再开始查找
         for (int i = levelCount - 1; i >= 0; --i) {
-            while (p.forwards[i] != null && p.forwards[i].data < value) {
+            while (p.forwards[i] != null && p.forwards[i].data.compareTo(val)<0) {
+                // 找到前一节点
                 p = p.forwards[i];
             }
         }
 
-        if (p.forwards[0] != null && p.forwards[0].data == value) {
+        if (p.forwards[0] != null && p.forwards[0].data.compareTo(val)==0) {
             return p.forwards[0];
         } else {
             return null;
         }
     }
 
-    public void insert(int value) {
-        //随机动态添加后索引层数(1-level层添加索引,0层原始层添加数据)
-        int level = randomLevel();
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public void insert(E val) {
+        int level = head.forwards[0]==null?1:randomLevel();
+        //levelcount加到至少level
+        if(level>levelCount){
+            level = ++levelCount;
+        }
 
-        Node newNode = new Node();
-        newNode.data = value;
-        newNode.maxLevel = level;
-
-        //记录将要更新的层数
+        Node newNode = new Node(level,val);
         Node update[] = new Node[level];
         for (int i = 0; i < level; ++i) {
             update[i] = head;
         }
 
-        // record every level largest value which smaller than insert value in update[]
-
         Node p = head;
-        for (int i = level - 1; i >= 0; --i) {
-            while (p.forwards[i] != null && p.forwards[i].data < value) {
+        // 从最大层开始查找，找到前一节点，通过--i，移动到下层再开始查找
+        for (int i = levelCount - 1; i >= 0; --i) {
+            while (p.forwards[i] != null && p.forwards[i].data.compareTo(val)<0) {
+                // 找到前一节点
                 p = p.forwards[i];
             }
-            // 这里update[i]表示当前层节点的前一节点，因为要找到前一节点，才好插入数据
-            update[i] = p;
-        }
+            // levelCount 会 > level，所以加上判断
+            if (level > i) {
+                update[i] = p;
+            }
 
-        // 将每一层节点和后面节点关联
+        }
         for (int i = 0; i < level; ++i) {
             newNode.forwards[i] = update[i].forwards[i];
             update[i].forwards[i] = newNode;
         }
 
-        // levelCount 更新
-        if (levelCount < level) levelCount = level;
+
+
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public void delete(int value) {
         Node[] update = new Node[levelCount];
         Node p = head;
         for (int i = levelCount - 1; i >= 0; --i) {
-            while (p.forwards[i] != null && p.forwards[i].data < value) {
+            while (p.forwards[i] != null && p.forwards[i].data.compareTo(value)<0) {
                 p = p.forwards[i];
             }
             update[i] = p;
         }
 
-        if (p.forwards[0] != null && p.forwards[0].data == value) {
+        if (p.forwards[0] != null && p.forwards[0].data.compareTo(value)==0) {
             for (int i = levelCount - 1; i >= 0; --i) {
-                if (update[i].forwards[i] != null && update[i].forwards[i].data == value) {
+                if (update[i].forwards[i] != null && update[i].forwards[i].data.compareTo(value)==0) {
                     update[i].forwards[i] = update[i].forwards[i].forwards[i];
                 }
             }
         }
-
-        while (levelCount>1&&head.forwards[levelCount]==null){
-            levelCount--;
-        }
-
     }
+
+
+
+
 
     // 理论来讲，一级索引中元素个数应该占原始数据的 50%，二级索引中元素个数占 25%，三级索引12.5% ，一直到最顶层。
     // 因为这里每一层的晋升概率是 50%。对于每一个新插入的节点，都需要调用 randomLevel 生成一个合理的层数。
@@ -108,11 +117,23 @@ public class SkipList {
 
 
 
-    public class Node {
-        private int data = -1;
+    public class Node<E extends Comparable<? super E>> {
 
-        private Node forwards[] = new Node[MAX_LEVEL];
-        private int maxLevel = 0;
+        /**
+         * 结点存的值
+         */
+        private E data;
+
+        /**
+         * 结点指向第i级的结点，forwards[0]就是原始结点 ,forwards[3]就是第三层的所有结点
+         */
+        private Node<E>[] forwards;
+
+
+        public Node(int MAX_LEVEL, E data) {
+            this.data = data;
+            this.forwards = new Node[MAX_LEVEL];
+        }
 
         @Override
         public String toString() {
@@ -120,7 +141,6 @@ public class SkipList {
             builder.append("{ data: ");
             builder.append(data);
             builder.append("; levels: ");
-            builder.append(maxLevel);
             builder.append(" }");
 
             return builder.toString();
@@ -146,17 +166,16 @@ public class SkipList {
 
 
     public static void main(String args[]){
-        SkipList list = new SkipList();
+        SkipList<Integer> list = new SkipList<>();
         list.insert(1);
         list.insert(2);
-        list.insert(3);
-//        list.insert(4);
+        list.printAll_beautiful();
+        list.insert(4);
 //        list.insert(5);
 //        list.insert(6);
 //        list.insert(8);
 //        list.insert(7);
-        list.printAll_beautiful();
-        list.printAll_beautiful();
+
 
     }
 }
