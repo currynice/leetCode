@@ -5,9 +5,13 @@ package com.cxy.leetCode.skipList;
  */
 public class SkipList {
 
+    //跳表更新索引数量概率
     private static final float SKIPLIST_P = 0.5f;
+
+    //最高层数
     private static final int MAX_LEVEL = 16;
 
+    //当前层数
     private int levelCount = 1;
 
     private Node head = new Node();  // 带头链表
@@ -28,31 +32,37 @@ public class SkipList {
     }
 
     public void insert(int value) {
+        //随机动态添加后索引层数(1-level层添加索引,0层原始层添加数据)
         int level = randomLevel();
+
         Node newNode = new Node();
         newNode.data = value;
         newNode.maxLevel = level;
+
+        //记录将要更新的层数
         Node update[] = new Node[level];
         for (int i = 0; i < level; ++i) {
             update[i] = head;
         }
 
         // record every level largest value which smaller than insert value in update[]
+
         Node p = head;
         for (int i = level - 1; i >= 0; --i) {
             while (p.forwards[i] != null && p.forwards[i].data < value) {
                 p = p.forwards[i];
             }
-            update[i] = p;// use update save node in search path
+            // 这里update[i]表示当前层节点的前一节点，因为要找到前一节点，才好插入数据
+            update[i] = p;
         }
 
-        // in search path node next node become new node forwords(next)
+        // 将每一层节点和后面节点关联
         for (int i = 0; i < level; ++i) {
             newNode.forwards[i] = update[i].forwards[i];
             update[i].forwards[i] = newNode;
         }
 
-        // update node hight
+        // levelCount 更新
         if (levelCount < level) levelCount = level;
     }
 
@@ -94,23 +104,13 @@ public class SkipList {
         return level;
     }
 
-    public void printAll() {
-        Node p = head;
-        while (p.forwards[0] != null) {
-            System.out.print(p.forwards[0] + " ");
-            p = p.forwards[0];
-        }
-        System.out.println();
-    }
 
-    /**
-     * 跳表的结点，记录了当前节点数据和所在层数以及数据
-     */
+
+
+
     public class Node {
         private int data = -1;
-        /**
-         * 当前结点位置的下一结点所有层的数据，上层到下层，下标-1
-         */
+
         private Node forwards[] = new Node[MAX_LEVEL];
         private int maxLevel = 0;
 
@@ -126,4 +126,46 @@ public class SkipList {
             return builder.toString();
         }
     }
+
+    /**
+     * 打印所有数据
+     */
+    public void printAll_beautiful() {
+        Node p = head;
+        Node[] c = p.forwards;
+        Node[] d = c;
+        int maxLevel = c.length;
+        for (int i = maxLevel - 1; i >= 0; i--) {
+            do {
+                System.out.print((d[i] != null ? d[i].data : null) + ":" + i + "-------");
+            } while (d[i] != null && (d = d[i].forwards)[i] != null);
+            System.out.println();
+            d = c;
+        }
+    }
+
+
+    public static void main(String args[]){
+        SkipList list = new SkipList();
+        list.insert(1);
+        list.insert(2);
+        list.insert(3);
+//        list.insert(4);
+//        list.insert(5);
+//        list.insert(6);
+//        list.insert(8);
+//        list.insert(7);
+        list.printAll_beautiful();
+        list.printAll_beautiful();
+
+    }
 }
+
+
+
+
+
+
+
+
+
