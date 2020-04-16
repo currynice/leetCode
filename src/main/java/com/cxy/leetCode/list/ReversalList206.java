@@ -14,12 +14,12 @@ public class ReversalList206 {
             //空链或只有一个结点，返回
             return head;
         }
-        ListNode prev = null;//前结点
+        ListNode prev = null;//初始化前结点
         ListNode curr = head; //当前结点
         while (curr != null) {
             ListNode nextTemp = curr.next;//保存下一结点
             curr.next = prev; //反转
-            prev = curr;
+            prev = curr;//移动prev
             curr = nextTemp;
         }
         return prev;
@@ -35,15 +35,15 @@ public class ReversalList206 {
     public static ListNode reverseList2(ListNode head) {
         //结点next是null，则说明当前节点是反转后的头节点
         // 为null返回
-        if(head==null || null==head.next){
+        ListNode newHead;
+        if (head == null || head.next == null) {
             return head;
         }
-        ListNode p = reverseList2(head.next);
-        //n k+1 的下一个节点指向 n k
+        newHead = reverseList(head.next); // head.next 作为剩余部分的头指针
+        // head.next 代表新链表的尾，将它的 next 置为 head，就是将 head 加到末尾了。
         head.next.next = head;
         head.next = null;
-        return p;
-        //除非最后一次不存在上一层递归嵌套，否则都是有值的
+        return newHead;
     }
 
     //输入: 1->2->3->4->5->NULL
@@ -55,13 +55,13 @@ public class ReversalList206 {
         ListNode a4 = new ListNode(4);
         ListNode a5 = new ListNode(5);
 
-        a1.next = (a2);
+        a1.next =(a2);
         a2.next =(a3);
         a3.next =(a4);
         a4.next =(a5);
 
-        reverseList(a1);
-        ListUtil.printList(a1);
+
+        ListUtil.printList(reverseList(a1));
     }
 
 
