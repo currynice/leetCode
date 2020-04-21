@@ -1,10 +1,13 @@
 package com.cxy.leetCode.queue;
-//基于链表的实现，我们同样需要两个指针：head 指针和 tail 指针。它们分别指向链表的第一个结点和最后一个结点。
-// 入队时，tail->next= new_node, tail = tail->next；出队时，value = head.val, head = head->next。
+
+
+//基于链表的队列实现
 public class ListQueue {
 
+    //head 指针指向链表的第一个结点。
     private Node head = null;
 
+    //tail 指针指向最后一个结点。
     private Node tail =null;
 
 
@@ -21,7 +24,7 @@ public class ListQueue {
         }
     }
 
-    //入队
+    //入队 tail->next= new_node, tail = tail->next
     public void enqueue(int value){
         //空
         if(head ==null){
@@ -34,7 +37,7 @@ public class ListQueue {
         }
     }
 
-//出队,head出队
+//出队,head出队,value = head.val, head = head->next。
     public int dequeue(){
         //空
         if(head ==null){

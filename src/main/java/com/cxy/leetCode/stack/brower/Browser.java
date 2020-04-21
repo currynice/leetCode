@@ -1,8 +1,8 @@
-package com.cxy.leetCode.stack;
+package com.cxy.leetCode.stack.brower;
 /**
  * 使用前后栈实现浏览器的前进后退。
  *
- * @author chinalwb
+ * @author
  */
 public class Browser {
 
@@ -10,7 +10,7 @@ public class Browser {
         Browser browser = new Browser();
         browser.open("http://www.baidu.com");
         browser.open("http://news.baidu.com/");
-        browser.open("http://news.baidu.com/ent");
+        browser.open("http://news.baidu.com/123");
         browser.goBack();
         browser.goBack();
         browser.goForward();
@@ -25,11 +25,11 @@ public class Browser {
         browser.checkCurrentPage();
     }
 
-    //当前页
+    //当前页url
     private String currentPage;
-    //后退
+    //后退栈
     private LinkedListBaseStack backStack;
-    //前进
+    //前进栈
     private LinkedListBaseStack forwardStack;
 
     //construction
@@ -41,19 +41,19 @@ public class Browser {
     //打开新页面
     public void open(String url) {
         if (this.currentPage != null) {
-            //回退增加当前
+            //后退栈增加当前
             this.backStack.instack(this.currentPage);
-            //旧的前进无法访问，清空
+            //旧的前进栈无法访问，清空
             this.forwardStack.clear();
         }
         showUrl(url, "Open");
     }
 
-    public boolean canGoBack() {
+    private  boolean canGoBack() {
         return this.backStack.getSize() > 0;
     }
 
-    public boolean canGoForward() {
+    private boolean canGoForward() {
         return this.forwardStack.getSize() > 0;
     }
 
@@ -73,7 +73,7 @@ public class Browser {
         if (this.canGoForward()) {
             this.backStack.instack(this.currentPage);
             String forwardUrl = this.forwardStack.outstack();
-            showUrl(forwardUrl, "Foward");
+            showUrl(forwardUrl, "Forward");
             return forwardUrl;
         }
 

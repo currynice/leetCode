@@ -9,7 +9,7 @@ public class Test1 {
 
     public static void main(String args[]){
           System.out.println(f2(10));
-        System.out.println();
+        System.out.println(f(10));
     }
     private static Map<Integer,Integer> resultMap = new HashMap<>();
 
