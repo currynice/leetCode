@@ -31,12 +31,7 @@ public class TestCombine {
     }
 
 
-//    static void depthFirstIterate(Node tree) {
-//         doSomething(tree);
-//         for (Iterator<Node> it = new DepthFirstIterator(tree.iterator()); it.hasNext();) {
-//             doSomething(it.next());
-//             }
-//        }
+
 //Root
 //A
 //D
@@ -51,9 +46,7 @@ public class TestCombine {
             it.next().doSomething();
         }
     }
-
-
-    static void doSomething(Node node){System.out.println(node);}
+    
 
 
         public static void main(String args[]){
