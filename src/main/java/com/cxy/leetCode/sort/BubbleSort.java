@@ -21,18 +21,19 @@ public class BubbleSort {
             for(int j=0;j<n-i-1;j++){
                 //比较
                 if(a[j]>a[j+1]){
-                    //exchange1:
+                    //exchange way 1:
 //                    int temp = a[j];
 //                    a[j] = a[j+1];
 //                    a[j+1] = temp;
-                    //exchange2:
+                    //exchange way 2 异或:
                     a[j] = (a[j] ^ a[j+1]);
                     a[j+1] =  (a[j] ^a[j+1]);
                     a[j] = (a[j] ^ a[j+1]);
                     flag = true;
                 }
             }
-            if (!flag)break;
+            if (!flag)
+                break;
         }
         System.out.println(Arrays.toString(a));
 
