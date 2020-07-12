@@ -1,8 +1,8 @@
-package com.cxy.leetCode.stack;
+package com.cxy.leetCode.stack.brower;
 
 
 /**
- * 基于链表的链表栈
+ * 基于链表的链表栈(每个结点存储的是字符串)
  */
 public class LinkedListBaseStack {
 
@@ -16,18 +16,19 @@ public class LinkedListBaseStack {
         private String value;
         private Node next;
 
+        //初始化时用到的construct
         public Node(String value) {
             this(value,null);
         }
 
+        //construct
         public Node(String value, Node next) {
             this.value = value;
             this.next = next;
         }
+
+
     }
-
-
-
 
     public Node getStack() {
         return stack;
@@ -37,6 +38,10 @@ public class LinkedListBaseStack {
         return size;
     }
 
+
+    /**
+     * 从栈顶打印到栈底
+     */
     public void printStack(){
         if (this.size==0) {
             return;
@@ -55,12 +60,12 @@ public class LinkedListBaseStack {
         this.size = 0;
     }
 
-    public Node createNewNode(String page,Node next){
+    private Node createNewNode(String page,Node next){
         return new Node(page,next);
     }
 
 
-    //入栈
+    //封装的入栈方法
     public boolean instack(String page){
         Node now = createNewNode(page,stack);
         this.stack = now;
@@ -68,6 +73,7 @@ public class LinkedListBaseStack {
         return true;
     }
 
+    //封装的出栈方法
     public String outstack(){
         if(null==stack){
             return "empty stack";

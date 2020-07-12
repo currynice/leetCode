@@ -20,12 +20,13 @@ public class CircularQueue {
 
     //入队
     public boolean enqueue(int item){
-    //如果队满
+    //如果队满,入队失败
         if((tail+1)%capacity==head){
             return false;
         }
         items[tail] = item;
-        //即tail = (tail+1)%capacity
+        //更新 tail指向的index
+        //只有一种特殊情况
         if(tail==capacity-1){
           tail = 0;
         }else{
@@ -44,7 +45,8 @@ public class CircularQueue {
 
         int value = items[head];
 
-        //head = (head+1)%capacity
+        //更新 head指向的index
+        //只有一种特殊情况
         if(head==capacity-1){
             head = 0;
         }else{

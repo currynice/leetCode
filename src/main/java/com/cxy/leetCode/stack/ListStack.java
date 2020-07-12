@@ -1,10 +1,12 @@
 package com.cxy.leetCode.stack;
 
 
-
+/**
+ * 链表栈
+ */
 public class ListStack {
 
-    private ListNode items = null; // 数组
+    private ListNode items = null; // 链表
 
 
     // 入栈操作
@@ -26,6 +28,7 @@ public class ListStack {
 
         //先取值
         int value = items.val;
+        //将item.next 赋值给 item
         items = items.next;
         return value;
     }
