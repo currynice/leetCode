@@ -16,10 +16,21 @@ package com.cxy.brush.leetcode.editor.cn;
 // 👍 8623 👎 0
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public int[] twoSum(int[] nums, int target) {
-        
+        Map<Integer,Integer> cache = new HashMap<>();
+        for(int i=0;i<nums.length;i++){
+            if(null==cache.get(target-nums[i])){
+                cache.put(nums[i],i);
+            }else {
+                return new int[]{i,cache.get(target-nums[i])};
+            }
+        }
+        return null;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
