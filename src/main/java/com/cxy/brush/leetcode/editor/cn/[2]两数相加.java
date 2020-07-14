@@ -16,6 +16,9 @@ package com.cxy.brush.leetcode.editor.cn;
 
 
 //leetcode submit region begin(Prohibit modification and deletion)
+
+import com.cxy.brush.leetcode.editor.cn.public_class.ListNode;
+
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -25,14 +28,42 @@ package com.cxy.brush.leetcode.editor.cn;
  * }
  */
 class Solution2 {
-    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+    public  ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        //进位 0 or 1 ，因为9+9+1 = 19，最多进一位
+        int  carry = 0;
+        //预先仿真节点, 保存头节点，防止指针丢失
+        ListNode pre = new ListNode(0);
+        ListNode cur = pre;
 
+        //计算直至两个链表都为null
+        while((null!=l1) || (null!=l2)){
+            int para1 = null==l1?0:l1.val;
+            int para2 = null==l2?0:l2.val;
+
+            int sum = para1 + para2 + carry;
+            carry = sum / 10;
+            sum = sum % 10;
+            cur.next = new ListNode(sum);
+            //结果链表移动
+            cur = cur.next;
+
+            //参数链表移动
+            if(null != l1){
+                l1 = l1.next;
+            }
+
+            if(null != l2){
+                l2 = l2.next;
+            }
+        }
+
+        //进位 若为1 ,需要加到结果链表中
+        if(carry == 1){
+            cur.next = new ListNode(1);
+        }
+        return pre.next;
     }
+
 }
 
-class ListNode {
-     int val;
-    ListNode next;
-     ListNode(int x) { val = x; }
-}
 //leetcode submit region end(Prohibit modification and deletion)

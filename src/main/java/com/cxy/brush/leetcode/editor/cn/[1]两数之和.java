@@ -32,5 +32,29 @@ class Solution {
         }
         return null;
     }
+
+    /**
+     * 双指针(前提: nums升序排列)
+     * @param nums
+     * @param target
+     * @return
+     */
+    public int[] twoSum2(int[] nums, int target) {
+        int left = 0,right = nums.length - 1;
+        //一前一后
+        while(left<right){
+            int sum = nums[left] + nums[right];
+            if(sum == target){
+                return new int[]{left,right};
+            }else if(sum > target){
+                //大了,sum小一点
+                right--;
+            }else if(sum < target){
+                //大了,sum 大一点
+                left++;
+            }
+        }
+        return new int[]{-1,-1};
+    }
 }
 //leetcode submit region end(Prohibit modification and deletion)
