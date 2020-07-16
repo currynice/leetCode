@@ -31,6 +31,25 @@ public class BaseOperation {
         ListNode next;
     }
 
+    //反转链表，在区域反转等里面会用到
+
+    /**
+     * 返回反转后的链表
+     * @param head
+     * @return
+     */
+     ListNode reverse(ListNode head) {
+        ListNode pre = null;
+        ListNode curr = head;
+        while (curr != null) {
+            ListNode next = curr.next;
+            curr.next = pre;
+            pre = curr;
+            curr = next;
+        }
+        return pre;
+    }
+
     /**
      *  遍历一个链表，既可以迭代遍历，也可以递归
      * @param head
