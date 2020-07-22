@@ -4,54 +4,52 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
-
-class So{
     //leetcode submit region begin(Prohibit modification and deletion)
-    class Solution {
-
+    class Solution239 {
         Deque<Integer> deque = new ArrayDeque<>();
 
-        public void clean_deque(int i, int k,int[] nums) {
-            // remove indexes of elements not from sliding window
-            if (!deque.isEmpty() && deque.getFirst() == i - k)
+        public void cleanDeque(int curr, int k, int[] nums) {
+            // 清除滑动窗口不可见元素
+                if(!deque.isEmpty() && deque.peekFirst()==(curr-k))
                 deque.removeFirst();
 
-            // remove from deq indexes of all elements
-            // which are smaller than current element nums[i]
-            while (!deque.isEmpty() && nums[i] > nums[deque.getLast()])
+        //移除所有比当前元素小的元素
+            while(!deque.isEmpty() && nums[curr] > nums[deque.getLast()])
                 deque.removeLast();
-        }
+        //现在 队列空 或 队列头一定是最大的
+
+    }
 
 
+        public int[] maxSlidingWindow(int[] nums, int k) {
 
-        public  int[] maxSlidingWindow(int[] nums, int k) {
-
-
-            int n = nums.length;
-            if (n * k == 0) return new int[0];
-            if (k == 1) return nums;
-            List<Integer> result = new ArrayList<>(n-k+1);
-
-            int max_idx = 0;
-            for (int i = 0; i < k; i++) {
-                clean_deque(i, k,nums);
-                deque.addLast(i);
-                // compute max in nums[:k]
-                if (nums[i] > nums[max_idx]) max_idx = i;
+            int len = nums.length;
+            if(len * k ==0){
+                return null;
             }
+            List<Integer> result = new ArrayList<>();
 
-            result.add(nums[max_idx]);
-
-            // build output
-            for (int i  = k; i < n; i++) {
-                clean_deque(i, k,nums);
+            int maxIndex = 0;
+            //init
+            for(int i=0;i<k;i++){
+                cleanDeque(i,k,nums);
                 deque.addLast(i);
+
+                if (nums[i] > nums[maxIndex]) maxIndex = i;
+            }
+            result.add(nums[maxIndex]);
+
+            for(int j=k;j<len;j++){
+                cleanDeque(j,k,nums);
+                //队列空或队列头一定是最大的
+                deque.addLast(j);
                 result.add(nums[deque.getFirst()]);
             }
 
             return result.stream().mapToInt(Integer::valueOf).toArray();
 
         }
+
 //
 //    public static void main(String[] args) {
 ////        int[] nums = new int[]{1,3,-1,-3,5,3,6,7};
@@ -59,57 +57,4 @@ class So{
 //        maxSlidingWindow(nums,5);
 //    }
     }
-//leetcode submit region end(Prohibit modification and deletion)
-
-}
-
-
-//leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
-
-
-
-    public  int[] maxSlidingWindow(int[] nums, int k) {
-        int len = nums.length;
-        if (len * k == 0) return new int[0];
-
-
-        Deque<Integer> deque = new ArrayDeque<>();
-        List<Integer> result = new ArrayList<>(len-k+1);
-
-
-        //初始化双端队列
-        for(int i=0;i<k;i++){
-            if(deque.isEmpty()){
-                deque.addFirst(i);
-                continue;
-            }
-            //初始化时，当前元素大于队列最大值，替换最大值,反正不会溢出deque
-            if(deque.peekFirst()!=null && nums[deque.peekFirst()]<nums[i]){
-                deque.addFirst(i);
-            }else {
-                deque.addLast(i);
-            }
-        }
-        result.add(nums[deque.peekFirst()]);
-
-
-        for(int j=k;j<len;j++){
-            if (!deque.isEmpty()){
-                //deque 头是看不见的话，移除
-                deque.removeFirstOccurrence(j-k);
-            }
-            //移除所有比当前元素小的deque中下标
-            while (!deque.isEmpty() && nums[j] > nums[deque.peekLast()]){
-                deque.removeLast();
-            }
-            deque.addLast(j);
-            result.add(nums[deque.peekFirst()]);
-        }
-
-        return result.stream().mapToInt(Integer::valueOf).toArray();
-
-    }
-
-}
 //leetcode submit region end(Prohibit modification and deletion)
