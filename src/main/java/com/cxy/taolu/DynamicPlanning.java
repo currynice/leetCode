@@ -42,9 +42,61 @@ public class DynamicPlanning {
             return dict.get(n);
         }
 
+    /**
+     * 在dp数组（一张表）上自底向上，完成最终结果的推算。
+     * @param N
+     * @return
+     */
+    public static int fibWithDynamic(int N){
+       int[] dp = new int[N+1];//舍弃下标0
+       dp[1] = 1;
+       dp[2] = 1;
+
+       for(int i= 3;i<N+1;i++){
+           //fn = f(n-1) + f(n-2)
+           dp[i] = dp[i-1] + dp[i-2];
+       }
+       return dp[N];
+    }
+
+    /**
+     * 节省db table 所占内存的优化方法
+     * @param n
+     * @return
+     */
+    public static int fibWithDynamicO1(int n) {
+        if (n == 2 || n == 1)
+            return 1;
+        int prev = 1, curr = 1;
+        for (int i = 3; i <= n; i++) {
+            int sum = prev + curr;
+            prev = curr;
+            curr = sum;
+        }
+        return curr;
+    }
+
+
+    /**
+     *
+     * 「状态转移⽅程」听起来很⾼端。f(n) 即⼀个状态 n，是由状态 n - 1 和状态 n - 2 相加转移⽽来，即状态转移。
+     *
+     *  无论是 return f(n - 1) + f(n - 2)，还是 dp[i] = dp[i - 1] + dp[i - 2]，以及对备忘录 或 DP table 的初始化操作，
+     *  都是围绕 状态转移⽅程 的不同形式。可⻅列出「状态转移⽅程」是解决问题的核⼼。
+     *  状态转移⽅程直接代表着暴⼒解法。
+     *
+     * 如何优化状态转移方程下的暴力解?
+     *   ⽆⾮是⽤备忘录(缓存) 或  DP table，对了，根据斐波那契数列
+     * 的状态转移⽅程，当前状态仅和之前的两个状态有关，其实并不需要那么⻓
+     * 的⼀个 DP table 来存储所有的状态，只要想办法存储之前的两个状态就⾏
+     * 了。所以，可以进⼀步优化，把空间复杂度降为 O(1)：
+     * @param args
+     */
+
     public static void main(String[] args) {
         System.out.println(fib(20));
         System.out.println(fibWithDict(20));
+        System.out.println(fibWithDynamic(20));
     }
 
 }
