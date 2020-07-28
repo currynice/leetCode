@@ -1,5 +1,7 @@
 package com.cxy.taolu;
 
+import com.cxy.brush.leetcode.editor.cn.public_class.BinaryTreeNode;
+
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -16,20 +18,11 @@ public class TraverseBinaryTree {
     public static final String SEP = ",";
     public static final String NULL = "#";
 
-     class TreeNode{
 
-        private int data;
-        private TreeNode left;
-        private TreeNode right;
-
-        public TreeNode(int data) {
-            this.data = data;
-        }
-    }
 
     public static void main(String[] args) {
         TraverseBinaryTree traverseBinaryTree = new TraverseBinaryTree();
-        TreeNode root = traverseBinaryTree.treeInit();
+        BinaryTreeNode root = traverseBinaryTree.treeInit();
 
         //test for 前序
 //        StringBuilder sb = new StringBuilder();
@@ -40,7 +33,7 @@ public class TraverseBinaryTree {
 //        /* 根据cas字符串还原二叉树 */
 //        String[] nodesStr = casSting.split(SEP);
 //        LinkedList<String> nodes = new LinkedList(Arrays.asList(nodesStr));
-//        TreeNode build = traverseBinaryTree.preBuild(nodes);
+//        BinaryTreeNode build = traverseBinaryTree.preBuild(nodes);
 //        System.out.println();
 
         //test for 后序
@@ -52,7 +45,7 @@ public class TraverseBinaryTree {
 //        /* 根据cas字符串还原二叉树 */
 //        String[] nodesStr2 = casSting2.split(SEP);
 //        LinkedList<String> nodes2 = new LinkedList(Arrays.asList(nodesStr2));
-//        TreeNode build2 = traverseBinaryTree.postBuild(nodes2);
+//        BinaryTreeNode build2 = traverseBinaryTree.postBuild(nodes2);
 //        System.out.println();
 
         //test for 层级遍历
@@ -62,13 +55,13 @@ public class TraverseBinaryTree {
         System.out.println(casSting3);
 
         String[] nodesStr3 = casSting3.split(SEP);
-        TreeNode build3 = traverseBinaryTree.levelBuild(nodesStr3);
+        BinaryTreeNode build3 = traverseBinaryTree.levelBuild(nodesStr3);
         System.out.println();
     }
 
     /**
-     * 前序框架
-     *  void traverse(TreeNode root) {
+     * 前序框架 根，左，右
+     *  void traverse(BinaryTreeNode root) {
      if (root == null) return;
      -- 前序遍历的代码 --
      traverse(root.left);
@@ -77,7 +70,7 @@ public class TraverseBinaryTree {
      */
 
     //前序遍历
-    private  void preTrverse(TreeNode root, StringBuilder sb){
+    private  void preTrverse(BinaryTreeNode root, StringBuilder sb){
 
         /* 将二叉树打平为字符串 */
             if (root == null) {
@@ -90,21 +83,21 @@ public class TraverseBinaryTree {
     }
 
     //前序还原
-    private  TreeNode preBuild(LinkedList<String> nodes){
+    private  BinaryTreeNode preBuild(LinkedList<String> nodes){
             if (nodes.isEmpty()) return null;
             /****** 前序遍历位置 ******/
             // 第一个为根节点
             String first = nodes.removeFirst();
             if(first.equals(NULL)) return null;
-            TreeNode root = new TreeNode(Integer.parseInt(first));
+            BinaryTreeNode root = new BinaryTreeNode(Integer.parseInt(first));
             /***********************/
             root.left = preBuild(nodes);
             root.right = preBuild(nodes);
             return root;
     }
     /**
-      * 后序框架
-      *  void traverse(TreeNode root) {
+      * 后序框架 左，右, 根
+      *  void traverse(BinaryTreeNode root) {
         if (root == null) return;
         traverse(root.left);
         traverse(root.right);
@@ -112,7 +105,7 @@ public class TraverseBinaryTree {
       }
      */
     //后序遍历
-    private  void postTrverse(TreeNode root, StringBuilder sb){
+    private  void postTrverse(BinaryTreeNode root, StringBuilder sb){
 
         /* 将二叉树打平为字符串 */
         if (root == null) {
@@ -124,12 +117,12 @@ public class TraverseBinaryTree {
         sb.append(root.data).append(SEP);
     }
 
-    private  TreeNode postBuild(LinkedList<String> nodes){
+    private  BinaryTreeNode postBuild(LinkedList<String> nodes){
         if (nodes.isEmpty()) return null;
         // 最后一个为根节点
         String last = nodes.removeLast();
         if(last.equals(NULL)) return null;
-        TreeNode root = new TreeNode(Integer.parseInt(last));
+        BinaryTreeNode root = new BinaryTreeNode(Integer.parseInt(last));
         root.right = postBuild(nodes);
         root.left = postBuild(nodes);
         return root;
@@ -139,8 +132,8 @@ public class TraverseBinaryTree {
 
 
     /**
-     * 中序框架
-     *  void traverse(TreeNode root) {
+     * 中序框架  左 根 右
+     *  void traverse(BinaryTreeNode root) {
      -- 中序遍历的代码 --
      traverse(root.left);
      if (root == null) return;
@@ -148,7 +141,7 @@ public class TraverseBinaryTree {
      }
      */
     //中序遍历
-    private  void midTrverse(TreeNode root, StringBuilder sb){
+    private  void midTrverse(BinaryTreeNode root, StringBuilder sb){
 
         /* 将二叉树打平为字符串 */
         if (root == null) {
@@ -166,7 +159,7 @@ public class TraverseBinaryTree {
     /**
      * 层级遍历框架
      * while (!q.isEmpty()) {
-     *     TreeNode cur = q.poll();
+     *     BinaryTreeNode cur = q.poll();
      *
      *     if (cur.left != null) {
      *         q.offer(cur.left);
@@ -179,14 +172,14 @@ public class TraverseBinaryTree {
      */
 
     //层级遍历
-    private void levelTraverse(TreeNode root,StringBuilder sb) {
+    private void levelTraverse(BinaryTreeNode root,StringBuilder sb) {
         if (root == null) return;
         // 初始化队列，将 root 加入队列
-        Queue<TreeNode> q = new LinkedList<>();
+        Queue<BinaryTreeNode> q = new LinkedList<>();
         q.offer(root);
 
         while (!q.isEmpty()) {
-            TreeNode cur = q.poll();
+            BinaryTreeNode cur = q.poll();
            /******层级遍历代码位置***********/
             if (cur == null){
                 sb.append(NULL).append(SEP);
@@ -202,24 +195,24 @@ public class TraverseBinaryTree {
     }
 
 
-    private TreeNode levelBuild(String[] nodeStrs) {
+    private BinaryTreeNode levelBuild(String[] nodeStrs) {
         if(!(nodeStrs.length>0)) return null;
         //queue只保存已经处理完的相对父节点(根节点和每层的父节点)
-        Queue<TreeNode> queue = new LinkedList<>();
-        TreeNode root = new TreeNode(Integer.parseInt(nodeStrs[0]));
+        Queue<BinaryTreeNode> queue = new LinkedList<>();
+        BinaryTreeNode root = new BinaryTreeNode(Integer.parseInt(nodeStrs[0]));
         queue.offer(root);
         for(int i=1;i<nodeStrs.length;i++){
-            TreeNode parent = queue.poll();//一般不会是null
+            BinaryTreeNode parent = queue.poll();//一般不会是null
             // 父节点左子节点
             String left = nodeStrs[i++];
             if (!left.equals(NULL)) {
-                parent.left = new TreeNode(Integer.parseInt(left));
+                parent.left = new BinaryTreeNode(Integer.parseInt(left));
                 queue.offer(parent.left);
             }
             // 父节点对应的右侧子节点的值
             String right = nodeStrs[i++];
             if (!right.equals(NULL)) {
-                parent.right = new TreeNode(Integer.parseInt(right));
+                parent.right = new BinaryTreeNode(Integer.parseInt(right));
                 queue.offer(parent.right);
             }
         }
@@ -239,11 +232,11 @@ public class TraverseBinaryTree {
 
 
 
-    private  TreeNode treeInit(){
-        TreeNode root = new TreeNode(1);
-        TreeNode node2 = new TreeNode(2);
-        TreeNode node3 = new TreeNode(3);
-        TreeNode node4 = new TreeNode(4);
+    private  BinaryTreeNode treeInit(){
+        BinaryTreeNode root = new BinaryTreeNode(1);
+        BinaryTreeNode node2 = new BinaryTreeNode(2);
+        BinaryTreeNode node3 = new BinaryTreeNode(3);
+        BinaryTreeNode node4 = new BinaryTreeNode(4);
 
         root.left = node2;
         root.right = node3;
