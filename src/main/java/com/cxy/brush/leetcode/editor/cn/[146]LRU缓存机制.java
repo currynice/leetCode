@@ -57,6 +57,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 //leetcode submit region begin(Prohibit modification and deletion)
+//双链表节点 + 哈希表
+
+//靠头部的数据是最近使用的，靠尾部的数据是最久未使用的。
 class LRUCache {
     //双链表节点
     class DLinkedNode {
@@ -70,79 +73,140 @@ class LRUCache {
 
     private Map<Integer,DLinkedNode> cache = new HashMap<>();
 
+    //size of 双链表
     private int size;
 
+    // 容量
     private int capacity;
 
+    // head tail 虚拟节点
     private DLinkedNode head,tail;
 
     public LRUCache(int capacity) {
         this.size = 0;
         this.capacity = capacity;
         //伪头部和伪尾点
-        head = new DLinkedNode();
-        tail = new DLinkedNode();
+        head = new DLinkedNode(0,0);
+        tail = new DLinkedNode(0,0);
         head.next = tail;
-        tail.next  = head;
+        tail.prev  = head;
     }
-    
+
+
     public int get(int key) {
         DLinkedNode target = cache.get(key);
         if(null == target)
             return -1;
-
-        moveToHead(target);
+        //将查询元素提升为最近使用
+        makeRecently(key);
         return target.value;
     }
-    
+
+
     public void put(int key, int value) {
         DLinkedNode node = cache.get(key);
         if (null == node) {
-            // 如果 key 不存在，创建一个新的节点
-            DLinkedNode newNode = new DLinkedNode(key, value);
-            // 添加进哈希表
-            cache.put(key, newNode);
-            // 添加至双向链表的头部
-            addToHead(newNode);
-            ++size;
-            if (size > capacity) {
-                // 如果超出容量，删除双向链表的尾部节点(最近未使用)
-                DLinkedNode tail = removeTail();
-                // 删除哈希表中对应的项
-                cache.remove(tail.key);
-                --size;
+            if(size == capacity){
+                removeLeastRecently();
             }
-        }
-        else {
-            // 如果 key 存在，修改 value，并移到头部
-            node.value = value;
-            moveToHead(node);
+            // 创建一个新的节点,加到head
+            addRecently(key,value);
+        } else {
+            // 如果 key 存在，先删除，再更新 value，并移到头部
+            deleteKey(key);
+            addRecently(key,value);
         }
 
     }
 
+
+
+
+    //function  to operate linkedList
+
+    // 在头部添加元素O(1) : 需要维护好三个相关节点的prev,next指针
     private void addToHead(DLinkedNode node) {
         node.prev = head;
         node.next = head.next;
         head.next.prev = node;
         head.next = node;
+        ++size;
     }
 
+
+    //删除某个节点 O(1), 假设 此节点一定存在
     private void removeNode(DLinkedNode node) {
         node.prev.next = node.next;
         node.next.prev = node.prev;
+        size--;
     }
 
-    private void moveToHead(DLinkedNode node) {
-        removeNode(node);
-        addToHead(node);
-    }
 
+    //弹出(删除)队尾队尾元素
     private DLinkedNode removeTail() {
-        DLinkedNode res = tail.prev;
-        removeNode(res);
-        return res;
+        if(tail.prev ==null){
+            return null;
+        }
+        DLinkedNode last = tail.prev;
+        removeNode(last);
+        return last;// only value exist
     }
+
+    //operate  LurCache api 统一封装操作 LurCache 的api ，操作双链表以及哈希表
+
+    // 将某个 key(node) 提升为最近使用的 将该key对应的元素移动到队头 moveToHead
+    private void makeRecently(int  key) {
+        DLinkedNode node = cache.get(key);
+        //删除
+        removeNode(node);
+        //放入对头
+        addToHead(node);
+        //维护map
+        cache.put(key,node);
+    }
+
+
+    // 将某个 key(node) 设置为最近使用的 将该key对应的元素移动到队头 moveToHead
+    private void addRecently(int  key,int value) {
+        DLinkedNode node =  new  DLinkedNode (key,value);
+        //放入对头
+        addToHead(node);
+        //维护map
+        cache.put(key,node);
+    }
+
+    //删除LruCache中的某个key
+    private void deleteKey(int  key) {
+        DLinkedNode node = cache.get(key);
+        //删除
+        removeNode(node);
+        //map中也删除
+        cache.remove(key);
+    }
+
+    /* 队满了，删除最久未使用的元素 */
+    private void removeLeastRecently() {
+        // 链表尾部元素是最久未使用的
+        DLinkedNode deletedNode = removeTail();
+        // 从 map 中删除它的 key
+        cache.remove( deletedNode.key);
+    }
+
+
+    public static void main(String[] args) {
+        LRUCache lru = new LRUCache(2);
+        lru.put(1,1);
+        lru.put(2,2);
+        System.out.println(lru.get(1));
+        lru.put(3,3);
+        System.out.println(lru.get(2));
+        lru.put(4,4);
+        System.out.println(lru.get(1));
+        System.out.println(lru.get(3));
+        System.out.println(lru.get(4));
+    }
+
+
 }
 
 /**
