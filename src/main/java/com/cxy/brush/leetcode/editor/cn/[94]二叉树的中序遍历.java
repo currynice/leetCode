@@ -17,9 +17,7 @@ package com.cxy.brush.leetcode.editor.cn;
 // 👍 595 👎 0
 
 
-import com.cxy.brush.leetcode.editor.cn.public_class.BinaryTreeNode;
 import com.cxy.brush.leetcode.editor.cn.public_class.TreeNode;
-
 //leetcode submit region begin(Prohibit modification and deletion)
 
 import java.util.*;
@@ -34,22 +32,31 @@ import java.util.*;
  * }
  */
 class Solution94 {
+//    public List<Integer> inorderTraversal(TreeNode root) {
+//        List<Integer> res = new ArrayList<>();
+//        helper(root,res);
+//        return res;
+//    }
+//
+//    // 左 根 右
+//    private void helper(TreeNode node, List<Integer> res) {
+//        if (node != null) {
+//            if (node.left != null) {
+//                helper(node.left, res);
+//            }
+//            res.add(node.val);
+//            if (node.right != null) {
+//                helper(node.right, res);
+//            }
+//        }
+//    }
+
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> res = new ArrayList<>();
-        helper(root,res);
-        return res;
-    }
 
-    private void helper(TreeNode node, List<Integer> res) {
-        if (node != null) {
-            if (node.left != null) {
-                helper(node.left, res);
-            }
-            res.add(node.val);
-            if (node.right != null) {
-                helper(node.right, res);
-            }
-        }
+
+
+        return res;
     }
 
 }
