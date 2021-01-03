@@ -58,11 +58,12 @@ class Solution20 {
     }
 
     public boolean isValid(String s) {
+        //长度为奇数直接fasle
         if(s.length()%2==1)return false;
         Stack<Character> stack  = new Stack();
         for(int i=0;i<s.length();i++){
             char c = s.charAt(i);
-            //属于右半部分
+            //属于右括号
             if (this.mappings.containsKey(c)) {
 
                 char topElement = stack.empty() ? '#' : stack.pop();
@@ -72,7 +73,7 @@ class Solution20 {
                     return false;
                 }
             } else {
-                //属于左半部分,入栈
+                //属于左括号,入栈
                 stack.push(c);
             }
         }

@@ -13,10 +13,12 @@ import java.util.List;
                 if(!deque.isEmpty() && deque.peekFirst()==(curr-k))
                 deque.removeFirst();
 
+
+
         //移除所有比当前元素小的元素
             while(!deque.isEmpty() && nums[curr] > nums[deque.getLast()])
                 deque.removeLast();
-        //现在 队列空 或 队列头一定是最大的
+        //现在 队列空 或 队列头是最大的
 
     }
 

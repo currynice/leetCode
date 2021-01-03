@@ -31,6 +31,9 @@ package com.cxy.brush.leetcode.editor.cn;
 
 import com.cxy.brush.leetcode.editor.cn.public_class.ListNode;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 
 /**
  * Definition for singly-linked list.
@@ -41,7 +44,7 @@ import com.cxy.brush.leetcode.editor.cn.public_class.ListNode;
  * }
  */
 class Solution25 {
-    public  ListNode reverseKGroup(ListNode head, int k) {
+    public  ListNode reverseKGroup0(ListNode head, int k) {
         ListNode dummy = new ListNode(0);
         dummy.next = head;
         ListNode pre = dummy;
@@ -71,37 +74,6 @@ class Solution25 {
 
     }
 
-//
-//    public  void main(String[] args) {
-//        ListNode node1 = new ListNode(1);
-//        ListNode node2  = new ListNode(2);
-//        node1.next = node2;
-//
-//        ListNode node3  = new ListNode(3);
-//        node2.next = node3;
-//
-//        ListNode node4  = new ListNode(4);
-//        node3.next = node4;
-//
-//
-//        ListNode node5  = new ListNode(5);
-//        node4.next = node5;
-//
-////        ListNode node6  = new ListNode(6);
-////        node5.next = node6;
-////
-////        ListNode node7  = new ListNode(7);
-////        node6.next = node7;
-////
-////        ListNode node8  = new ListNode(8);
-////        node7.next = node8;
-//
-//
-//
-//        ListNode result = reverseKGroup(node1,3);
-//        System.out.println();
-//    }
-
     private  static ListNode reverse(ListNode head){
         ListNode pre = null;
         ListNode cuur = head;
@@ -115,5 +87,88 @@ class Solution25 {
         }
         return pre;
     }
+
+
+    //栈(k个元素压栈，出栈即可得到反转链表)
+    public ListNode reverseKGroup2(ListNode head, int k) {
+        Deque<ListNode> stack = new ArrayDeque<>();
+        ListNode dummy = new ListNode(0);
+        ListNode p = dummy;
+        while (true) {
+            int count = 0;
+            ListNode tmp = head;
+            while (tmp != null && count < k) {
+                stack.add(tmp);
+                tmp = tmp.next;
+                count++;
+            }
+            if (count != k) {
+                p.next = head;
+                break;
+            }
+            while (!stack.isEmpty()){
+                p.next = stack.pollLast();
+                p = p.next;
+            }
+            p.next = tmp;
+            head = tmp;
+        }
+        return dummy.next;
+    }
+
+
+
+//    // 反转以 a 为头结点的链表
+//    private  ListNode reverse(ListNode a) {
+//        ListNode pre, cur, nxt;
+//        pre = null; cur = a; nxt = a;
+//        while (cur != null) {
+//            nxt = cur.next;
+//            // 逐个结点反转
+//            cur.next = pre;
+//            // 更新指针位置
+//            pre = cur;
+//            cur = nxt;
+//        }
+//        // 返回反转后的头结点
+//        return pre;
+//    }
+
+    /** 反转区间 [a, b) 的元素 */
+    private ListNode reverse(ListNode a, ListNode b) {
+        ListNode pre, cur, nxt;
+        pre = null; cur = a; nxt = a;
+        // while 终止的条件改一下就行了
+        while (cur != b) {
+            nxt = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = nxt;
+        }
+        // 返回反转后的头结点
+        return pre;
+    }
+
+    ListNode reverseKGroup(ListNode head, int k) {
+        if (head == null) return null;
+        // 区间 [a, b) 包含 k 个待反转元素
+        ListNode a, b;
+        a = b = head;
+        for (int i = 0; i < k; i++) {
+            // 不足 k 个，不需要反转，base case
+            if (b == null) return head;
+            b = b.next;
+        }
+        // 反转前 k 个元素
+        ListNode newHead = reverse(a, b);
+        // 递归反转后续链表并连接起来
+        a.next = reverseKGroup(b, k);
+        return newHead;
+    }
+
+
+
+
+
 }
 //leetcode submit region end(Prohibit modification and deletion)
