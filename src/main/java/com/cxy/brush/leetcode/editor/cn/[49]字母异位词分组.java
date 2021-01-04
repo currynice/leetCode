@@ -25,17 +25,11 @@ import java.util.*;
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution49 {
     public List<List<String>> groupAnagrams(String[] strs) {
+        //
         Map<String,List<String>> map = new HashMap<>();
         for(int i=0;i<strs.length;i++){
-            int[] num = new int[26];
-            for(int j=0;j<strs[i].length();j++){
-                num[strs[i].charAt(j)-'a'] ++;
-            }
-            //abc -> [0,1,2]   cba-> [0,1,2]
-            String key = "";
-            for(int j=0;j<num.length;j++){
-                key = key+ num[j]+"#";// 0#1#2
-            }
+
+            String key = hashFunction(strs[i]);
             if(map.containsKey(key)){
                 map.get(key).add(strs[i]);
             }else{
@@ -44,7 +38,21 @@ class Solution49 {
                 map.put(key,temp);
             }
         }
-        return new ArrayList<List<String>>(map.values());
+        return new ArrayList<>(map.values());
+    }
+
+
+    private String hashFunction(String str){
+        int[] num = new int[26];
+        for(int j=0;j<str.length();j++){
+            num[str.charAt(j)-'a'] ++;
+        }
+        //abc -> [0,1,2,0,0,0...]   cba-> [0,1,2,0,0,0...]
+        String key = "";
+        for(int j=0;j<num.length;j++){
+            key = key+ num[j]+"#";// 0#1#2#0#0#0#0#0##0#0#0#0#0#...
+        }
+        return key;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
