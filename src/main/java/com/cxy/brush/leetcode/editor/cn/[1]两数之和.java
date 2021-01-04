@@ -16,6 +16,7 @@ package com.cxy.brush.leetcode.editor.cn;
 // 👍 8623 👎 0
 
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,12 +35,13 @@ class Solution1 {
     }
 
     /**
-     * 双指针(前提: nums升序排列)
+     * 双指针(前提: nums升序排列，本题不适用，sort会损失原数组的下标信息)
      * @param nums
      * @param target
      * @return
      */
     public int[] twoSum2(int[] nums, int target) {
+        Arrays.sort(nums);
         int left = 0,right = nums.length - 1;
         //一前一后
         while(left<right){
@@ -56,5 +58,6 @@ class Solution1 {
         }
         return new int[]{-1,-1};
     }
+
 }
 //leetcode submit region end(Prohibit modification and deletion)
