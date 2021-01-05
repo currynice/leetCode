@@ -14,10 +14,11 @@ package com.cxy.brush.leetcode.editor.cn;
 // Related Topics 链表 数学
 // 👍 4579 👎 0
 
+import com.cxy.brush.leetcode.editor.cn.public_class.ListNode;
 
+import java.util.List;
 //leetcode submit region begin(Prohibit modification and deletion)
 
-import com.cxy.brush.leetcode.editor.cn.public_class.ListNode;
 
 /**
  * Definition for singly-linked list.
@@ -28,41 +29,81 @@ import com.cxy.brush.leetcode.editor.cn.public_class.ListNode;
  * }
  */
 class Solution2 {
+//    public  ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+//        //进位 0 or 1 ，因为9+9+1 = 19，最多进一位
+//        int  carry = 0;
+//        //预先仿真节点, 保存头节点，防止指针丢失 ，直接返回 pre.next();
+//        ListNode pre = new ListNode(-1);
+//        ListNode cur = pre;
+//
+//        //计算直至两个链表都为null
+//        while((null!=l1) || (null!=l2)){
+//            int para1 = null==l1?0:l1.val;
+//            int para2 = null==l2?0:l2.val;
+//
+//            int sum = para1 + para2 + carry;
+//            carry = sum / 10;
+//            sum = sum % 10;
+//            cur.next = new ListNode(sum);
+//            //结果链表移动
+//            cur = cur.next;
+//
+//            //参数链表移动
+//            if(null != l1){
+//                l1 = l1.next;
+//            }
+//
+//            if(null != l2){
+//                l2 = l2.next;
+//            }
+//        }
+//
+//        //进位 若为1 ,需要加到结果链表中
+//        if(carry == 1){
+//            cur.next = new ListNode(1);
+//        }
+//        return pre.next;
+//    }
+
     public  ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        //进位 0 or 1 ，因为9+9+1 = 19，最多进一位
-        int  carry = 0;
-        //预先仿真节点, 保存头节点，防止指针丢失
-        ListNode pre = new ListNode(0);
-        ListNode cur = pre;
+            int carry = 0;
+            ListNode pre = new ListNode(-1);//返回 pre.next();
+            ListNode curr = pre;
+            while(l1!=null || l2!=null){
+                int para1 = l1==null?0:l1.val;
+                int para2 = l2==null?0:l2.val;
+                int sum = carry+para1+para2;//最大19
+                carry = sum/10;
+                sum = sum%10;
+                curr.next = new ListNode(sum);
+                curr = curr.next;
+                if(l1 !=null){
+                    l1 = l1.next;
+                }
 
-        //计算直至两个链表都为null
-        while((null!=l1) || (null!=l2)){
-            int para1 = null==l1?0:l1.val;
-            int para2 = null==l2?0:l2.val;
-
-            int sum = para1 + para2 + carry;
-            carry = sum / 10;
-            sum = sum % 10;
-            cur.next = new ListNode(sum);
-            //结果链表移动
-            cur = cur.next;
-
-            //参数链表移动
-            if(null != l1){
-                l1 = l1.next;
-            }
-
-            if(null != l2){
-                l2 = l2.next;
-            }
-        }
-
-        //进位 若为1 ,需要加到结果链表中
+                if(l2 !=null){
+                    l2 = l2.next;
+                }
+                //进位 若为1 ,需要加到结果链表最后
         if(carry == 1){
-            cur.next = new ListNode(1);
+            curr.next = new ListNode(1);
         }
-        return pre.next;
+
+            }
+            return pre.next;
     }
+
+//    public static void main(String[] args) {
+//        ListNode l1 = new ListNode(2);
+//        l1.next = new ListNode(4);
+//        l1.next.next = new ListNode(3);
+//
+//        ListNode l2 = new ListNode(5);
+//        l2.next = new ListNode(6);
+//        l2.next.next = new ListNode(4);
+//       ListNode s = addTwoNumbers(l1,l2);
+//        System.out.println();
+//    }
 
 }
 

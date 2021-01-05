@@ -26,10 +26,36 @@ package com.cxy.brush.leetcode.editor.cn;
 // 👍 3957 👎 0
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution3 {
-    public int lengthOfLongestSubstring(String s) {
-       return  0;
+class Solution3{
+    public  int lengthOfLongestSubstring(String s) {
+
+        //corner case
+        int len = s.length();
+        if(len==0){
+            return 0;
+        }
+
+       int[] characterFreq = new int[256];
+        //init our two pointer
+        int start=0;
+        int result = 0;
+        for(int end=0;end<len;end++){
+              characterFreq[s.charAt(end)]++;
+              //先加再判断
+              while ( characterFreq[s.charAt(end)]>1){
+                  characterFreq[s.charAt(start)]--;
+                  start++;
+            }
+            result = Math.max(result,end-start+1);
+        }
+
+        return  result;
     }
+
+
 }
 //leetcode submit region end(Prohibit modification and deletion)
