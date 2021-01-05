@@ -101,7 +101,7 @@ class Solution15 {
     }
 
     public static void main(String[] args) {
-        int[] nums = new int[]{-1, 0, 1, 2, -1, -4};
+        int[] nums = new int[]{0,0,0};
         List<List<Integer>> result  =  threeSum(nums);
         System.out.println(Arrays.toString(result.toArray()));
     }
