@@ -30,4 +30,11 @@ class Solution {
 
 ### 画解
 
-  [frame_00001.png](https://pic.leetcode-cn.com/2847c2d9fb9a6326fecfcf8831ed1450046f1e10967cde9d8681c42393d745ff-frame_00001.png)  [frame_00002.png](https://pic.leetcode-cn.com/159cc7509e4a5acbfaf5c59b4b5cb1674f1a31fb87cc41528ca6e6df6132b1dc-frame_00002.png)  [frame_00003.png](https://pic.leetcode-cn.com/a62a6d9c878b4c856db1467b4282b936ee677d02a3b47ac4c67dfb4269a158f6-frame_00003.png)  [frame_00004.png](https://pic.leetcode-cn.com/7b672e389b1659d3ff2ba77101cf49de120a21732dd7aed5a707d8b33d6b2fb6-frame_00004.png)  [frame_00005.png](https://pic.leetcode-cn.com/ff8f38005f548beb5bd45a2e5e327f71acf069c8ad6e9680caeee655af71533a-frame_00005.png)  [frame_00006.png](https://pic.leetcode-cn.com/2f054f105ebcbe7a1cf3cce1a4ab8c0d85cef70fe674bb90a1c83e92dc6b1274-frame_00006.png)  [frame_00007.png](https://pic.leetcode-cn.com/018b08f276a746262cf64fa1cf0748d815f3cabe9c29c61f4973b6e6dd44e2c8-frame_00007.png)  [frame_00008.png](https://pic.leetcode-cn.com/385c6b1623b2d686e42e11882be13e6e717975fd0399712113992a318d7ca1e5-frame_00008.png) 
+  ![frame_00001.png](https://pic.leetcode-cn.com/2847c2d9fb9a6326fecfcf8831ed1450046f1e10967cde9d8681c42393d745ff-frame_00001.png)  
+  ![frame_00002.png](https://pic.leetcode-cn.com/159cc7509e4a5acbfaf5c59b4b5cb1674f1a31fb87cc41528ca6e6df6132b1dc-frame_00002.png)  
+  ![frame_00003.png](https://pic.leetcode-cn.com/a62a6d9c878b4c856db1467b4282b936ee677d02a3b47ac4c67dfb4269a158f6-frame_00003.png)  
+  ![frame_00004.png](https://pic.leetcode-cn.com/7b672e389b1659d3ff2ba77101cf49de120a21732dd7aed5a707d8b33d6b2fb6-frame_00004.png)  
+  ![frame_00005.png](https://pic.leetcode-cn.com/ff8f38005f548beb5bd45a2e5e327f71acf069c8ad6e9680caeee655af71533a-frame_00005.png)  
+  ![frame_00006.png](https://pic.leetcode-cn.com/2f054f105ebcbe7a1cf3cce1a4ab8c0d85cef70fe674bb90a1c83e92dc6b1274-frame_00006.png)  
+  ![frame_00007.png](https://pic.leetcode-cn.com/018b08f276a746262cf64fa1cf0748d815f3cabe9c29c61f4973b6e6dd44e2c8-frame_00007.png)  
+  ![frame_00008.png](https://pic.leetcode-cn.com/385c6b1623b2d686e42e11882be13e6e717975fd0399712113992a318d7ca1e5-frame_00008.png) 

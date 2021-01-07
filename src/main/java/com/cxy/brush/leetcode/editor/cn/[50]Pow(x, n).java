@@ -36,8 +36,9 @@ class Solution50 {
         if(N==0){
             return 1.0;
         }
-        //计算 y=N//2 ,定义//为 N/2的结果对下取整，
-        // N//2 进行奇偶判断,奇数要多*x
+        //计算 y=N//2 ,定义//为 N/2的结果对下取整的计算，
+        // 对 N 进行奇偶判断,偶数，那么 x^n = y^2
+       //                    奇数，那么 x^n = y^2 * x (多*x)
         double y = quickMul(x,N/2);
         return N%2==0? y*y : y*y*x;
 
@@ -47,12 +48,18 @@ class Solution50 {
         //因为int范围 [-2^31,2^31-1] , -N 不能简单取绝对值，用long long代替稳妥些
         long N = n;
 
+        //64 -> 32 -> 16-> 8->4->2
+        //77 -> 38->19->9->4->2
         if(N>=0){
             return quickMul(x,N);
         }else {
             return 1.0/quickMul(x,-N);
         }
 
+
+
     }
+
+
 }
 //leetcode submit region end(Prohibit modification and deletion)

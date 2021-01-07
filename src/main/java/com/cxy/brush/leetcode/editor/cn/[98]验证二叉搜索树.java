@@ -33,6 +33,7 @@ package com.cxy.brush.leetcode.editor.cn;
 // Related Topics 树 深度优先搜索 递归 
 // 👍 879 👎 0
 
+import com.cxy.brush.leetcode.editor.cn.public_class.ListNode;
 import com.cxy.brush.leetcode.editor.cn.public_class.TreeNode;
 
 import java.util.ArrayList;
@@ -57,37 +58,73 @@ import java.util.List;
  * }
  */
 class Solution98 {
+
+
+
+
     /**
-     * in-order 中序遍历(左根右)后判断是否升序
+     * in-order 中序遍历(左根右)后，判断结果ArrayList是否为升序
      * @param root
      * @return
      */
+//    public  boolean isValidBST(TreeNode root) {
+//        /* 将二叉树打平 */
+//        if (root == null) {
+//            return true;
+//        }
+//        List<Integer> result = new ArrayList<>();
+//        midTrverse(root,result);
+//        System.out.println(Arrays.toString(result.toArray()));
+//
+//        //判断是否是升序
+//        for(int i=1;i<result.size();i++){
+//            if(result.get(i) <= result.get(i-1)){
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
+//
+//    //中序遍历
+//    private   void midTrverse(TreeNode root, List<Integer> result){
+//        if(root.left!=null){
+//            midTrverse(root.left, result);
+//        }
+//        result.add(root.val);
+//        if(root.right!=null){
+//            midTrverse(root.right, result);
+//        }
+//    }
+
+
+
+
+    /**
+     * in-order 中序遍历(左根右)后判断当前节点是否大于中序遍历的前一个节点
+     * @param root
+     * @return
+     */
+
+    private long preVal = Long.MIN_VALUE;
+
     public  boolean isValidBST(TreeNode root) {
         /* 将二叉树打平 */
         if (root == null) {
             return true;
         }
-        List<Integer> result = new ArrayList<>();
-        midTrverse(root,result);
-        System.out.println(Arrays.toString(result.toArray()));
-        for(int i=1;i<result.size();i++){
-            if(result.get(i) <= result.get(i-1)){
-                return false;
-            }
+        // 左
+        if (!isValidBST(root.left)) {
+            return false;
         }
-        return true;
+        // 中：当前节点小于等于前一个节点，不满足BST
+        if (root.val <= preVal) {
+            return false;
+        }
+        preVal = root.val;
+        // 右
+        return isValidBST(root.right);
     }
 
-    //中序遍历
-    private   void midTrverse(TreeNode root, List<Integer> result){
-        if(root.left!=null){
-            midTrverse(root.left, result);
-        }
-        result.add(root.val);
-        if(root.right!=null){
-            midTrverse(root.right, result);
-        }
-    }
 
 //    public static void main(String[] args) {
 //        TreeNode root = new TreeNode(2,new TreeNode(1),new TreeNode(3));
@@ -106,8 +143,8 @@ class Solution98 {
 //    /**
 //     * node.val > min && node.val < max
 //     * @param node
-//     * @param min
-//     * @param max
+//     * @param min  树node 的val 应该大于的值
+//     * @param max  树node 的val 应该小于的值
 //     * @return
 //     */
 //    private boolean isValid(TreeNode node,Integer min ,Integer max){
