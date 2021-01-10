@@ -157,7 +157,7 @@ public class TraverseBinaryTree {
 
 
     /**
-     * 层级遍历框架
+     * 层级遍历框架(广度优先)
      * while (!q.isEmpty()) {
      *     BinaryTreeNode cur = q.poll();
      *
