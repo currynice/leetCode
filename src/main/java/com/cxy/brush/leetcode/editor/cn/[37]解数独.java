@@ -31,54 +31,64 @@ package com.cxy.brush.leetcode.editor.cn;//编写一个程序，通过填充空�
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+
+
     public void solveSudoku(char[][] board) {
-        fill(0,0,board);
+        if(board==null || board.length==0){
+            return;
+        }
+
+        fill(board,0,0);
     }
 
-    private  boolean fill(int row,int column,char[][] board){
-        //填完了一行，列越界，填下一行
-        if(column==9){
-            row++;
-            column=0;
-            if(row==9){
+    private  boolean fill(char[][] board, int row, int col){
+       // 当row等于board.length的时候表示数独最后一行全部读遍历完了，说明数独中的值是有效的，直接返回true
+        if (row == board.length)
+            return true;
+
+        //如果当前行的最后一列也遍历完了，就从下一行的第一列开始。这里的遍历
+        //顺序是从第1行的第1列一直到最后一列，然后第二行的第一列一直到最后
+        //一列，然后第三行的……
+        if (col == board.length)
+            return fill(board, row + 1, 0);
+        //如果当前位置已经有数字了，就不能再填了，直接到这一行的下一列
+        if (board[row][col] != '.')
+            return fill(board, row, col + 1);
+        //如果上面条件都不满足，我们就从1到9种选择一个合适的数字填入到数独中
+        for (char i = '1'; i <= '9'; i++) {
+            //判断当前位置[row，col]是否可以放数字i，如果不能放再判断下
+            //一个能不能放，直到找到能放的为止，如果从1-9都不能放，就会下面
+            //直接return false
+            if (!isValid(board, row, col, i))
+                continue;
+            //如果能放数字i，就把数字i放进去
+            board[row][col] = i;
+            //如果成功就直接返回，不需要再尝试了
+            if (fill(board, row, col))
                 return true;
-            }
+            //否则就撤销重新选择
+            board[row][col] = '.';
         }
-        if (!(".".equals((board[row][column]))))
-            return fill(row, column + 1,board); // 不是空白格，递归填下一格
-
-        for (int num = 1; num <= 9; num++) {           // 枚举出当前格的所有可填的选择
-            if (hasConfilt(row, column, num,board)) continue; // 如果存在冲突，跳过这个选择
-            board[row][column] =(char) (num+'0');;                   // 作出一个选择
-            if (fill(row, column + 1,board))
-                return true; // 如果基于它，填下一格，最后可以解出数独，直接返回true
-            board[row][column] = '.';               // 否则恢复为空白格
-        }
-        return false; // 尝试了1-9，每个都往下递归，都不能做完，返回false
+        //如果当前位置[row，col]不能放任何数字，直接返回false
+        return false;
 
     }
 
-    private boolean hasConfilt(int row,int column,int val,char[][] board){
-        for (int i = 0; i < 9; i++) {
-            if (board[i][column] == val || board[row][i] == val) { // 行或列里有冲突
-                return true;
-            }
+    //board[i][j] 能否填try_char
+    private boolean isValid(char[][] board, int i, int j, char try_char) {
+        for (int a = 0; a < 9; a++) {
+            //当前列有没有和字符c重复的
+            if (board[a][j] == try_char)
+                return false;
+            //当前行有没有和字符c重复的
+            if (board[i][a] == try_char)
+                return false;
+            //当前的单元格内是否有和字符c重复的
+            if (board[3 * (i / 3) + a / 3][3 * (j / 3) + a % 3] == try_char)
+                return false;
         }
-
-            int subRowStart = (int) Math.floor(row / 3) * 3; // 对于小框，行有三种起始索引 0、3、6
-            int subColStart = (int)  Math.floor(column / 3) * 3; // 对于小框，列有三种起始索引 0、3、6
-            for (int a = 0; a < 3; a++) {              // 遍历所在的小框
-                for (int b = 0; b < 3; b++) {
-                    if (val == board[subRowStart + a][subColStart + b]) { // 发现了重复数
-                        return true;
-                    }
-                }
-            }
-            return false; // 没有发生冲突
-
+        return true;
     }
-
-
 
 
 }
