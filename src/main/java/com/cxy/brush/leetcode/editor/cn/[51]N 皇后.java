@@ -39,7 +39,9 @@ package com.cxy.brush.leetcode.editor.cn;
 
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
@@ -55,13 +57,13 @@ class Solution {
     }
 
     private void solve(List<List<String>> res, char[][] chess, int row) {
-        //终止条件，最后一行可以走完，说明找到了正确输出，加入到res
+        //终止条件，可以走到最后一行，说明找到了正确输出，加入到res
         if (row == chess.length) {
             res.add(construct(chess));
             return;
         }
-        //一行一行遍历
-        for (int col = 0; col < chess.length; col++) {
+        //一列一列遍历
+        for (int col = 0; col < chess[0].length; col++) {
             //判断当前是否可以放皇后
             if (valid(chess, row, col)) {
                 //假设可以
@@ -75,16 +77,17 @@ class Solution {
 
 
 
-    //row表示第几行，col表示第几列
+    //判断当前chess中row行，col列的棋子是否可以放置Queue
     private boolean valid(char[][] chess, int row, int col) {
-        //判断当前列有没有皇后,只要检查走过的行数上面有没有皇后
+        //首先，检查当前列有没有皇后, 即之前行数上col列有没有皇后
         for (int i = 0; i < row; i++) {
             if (chess[i][col] == 'Q') {
                 return false;
             }
         }
-        //判断右上有没有皇后 todo
-        for (int i = row - 1, j = col + 1; i >= 0 && j < chess.length; i--, j++) {
+
+        //判断该点右上方向有没有皇后
+        for (int i = row - 1, j = col + 1; i >= 0 && j < chess[0].length; i--, j++) {
             if (chess[i][j] == 'Q') {
                 return false;
             }

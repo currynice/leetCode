@@ -41,42 +41,50 @@ import java.util.Set;
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
 
-        public int totalNQueens(int n) {
-            Set<Integer> columns = new HashSet<Integer>();
-            Set<Integer> diagonals1 = new HashSet<Integer>();
-            Set<Integer> diagonals2 = new HashSet<Integer>();
-            return backtrack(n, 0, columns, diagonals1, diagonals2);
-        }
+    public int totalNQueens(int n) {
+        Set<Integer> columns = new HashSet<>();
+        //row -1 行 所有右上方向已经使用的
+        Set<Integer> pie = new HashSet<>();
+        //row -1 行 所有左上方向已经使用的
+        Set<Integer> na = new HashSet<>();
+        return backtrack(n, 0, columns, pie, na);
+    }
 
-        public int backtrack(int n, int row, Set<Integer> columns, Set<Integer> diagonals1, Set<Integer> diagonals2) {
-            if (row == n) {
-                return 1;
-            } else {
-                int count = 0;
-                for (int i = 0; i < n; i++) {
-                    if (columns.contains(i)) {
-                        continue;
-                    }
-                    int diagonal1 = row - i;
-                    if (diagonals1.contains(diagonal1)) {
-                        continue;
-                    }
-                    int diagonal2 = row + i;
-                    if (diagonals2.contains(diagonal2)) {
-                        continue;
-                    }
-                    columns.add(i);
-                    diagonals1.add(diagonal1);
-                    diagonals2.add(diagonal2);
-                    count += backtrack(n, row + 1, columns, diagonals1, diagonals2);
-                    columns.remove(i);
-                    diagonals1.remove(diagonal1);
-                    diagonals2.remove(diagonal2);
+    private int backtrack(int n, int row, Set<Integer> columns, Set<Integer> pie, Set<Integer> na) {
+        //成功找到一组解,count +1
+        if (n == row) {
+            return 1;
+        } else {
+            int count = 0;
+            //查看当前行每列对应的位置
+            for (int i = 0; i < n; i++) {
+                //当前位置被皇后占用
+                if (columns.contains(i)) {
+                    continue;
                 }
-                return count;
+
+                if (pie.contains(row + i)) {
+                    continue;
+                }
+
+                if (na.contains(row - i)) {
+                    continue;
+                }
+                columns.add(i);
+                pie.add(row + i);
+                na.add(row - i);
+                //向下探索
+                count += backtrack(n, row + 1, columns, pie, na);
+                //探索后，不管由于没有
+                columns.remove(i);
+                pie.remove(row + i);
+                na.remove(row - i);
             }
+            return count;
         }
     }
+
+}
 
 
 //leetcode submit region end(Prohibit modification and deletion)
