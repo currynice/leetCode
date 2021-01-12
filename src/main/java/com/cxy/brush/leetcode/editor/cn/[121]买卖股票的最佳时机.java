@@ -26,7 +26,7 @@
 
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
+class Solution121 {
     public int maxProfit(int[] prices) {
         //遍历中遇到的最低价
         int minprice = Integer.MAX_VALUE;

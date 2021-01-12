@@ -30,7 +30,7 @@ package com.cxy.brush.leetcode.editor.cn;//编写一个程序，通过填充空�
 
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
+class Solution37 {
 
 
     public void solveSudoku(char[][] board) {

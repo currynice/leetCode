@@ -39,7 +39,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
+class Solution52 {
 
     public int totalNQueens(int n) {
         Set<Integer> columns = new HashSet<>();

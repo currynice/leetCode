@@ -65,7 +65,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
+class Solution36 {
     public boolean isValidSudoku(char[][] board) {
         //block_index (0-8)= (row/3)*3 + column/3   {/ 为整数除法}
         // row 一定是 012/345、678 中一组

@@ -39,12 +39,10 @@ package com.cxy.brush.leetcode.editor.cn;
 
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
+class Solution51 {
     public List<List<String>> solveNQueens(int n) {
         char[][] chess = new char[n][n];
         //初始化数组
