@@ -14,11 +14,11 @@ public class TrieNode {
     private boolean end = false;
 
     /**
-     * 该节点的所有子节点
+     * 该节点的所有子节点(256个，英文+字符)
      * key 下一个字符
      * value 对应节点
      */
-    private Map<Character, TrieNode> subNodes = new HashMap<>();
+    private Map<Character, TrieNode> subNodes = new HashMap<>(256);
 
 
     /**
@@ -31,7 +31,7 @@ public class TrieNode {
     }
 
     /**
-     * 根据字符,获取下个节点
+     * 获取字符对应的节点
      *
      * @return TrieNode
      */
