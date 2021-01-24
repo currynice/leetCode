@@ -5,7 +5,7 @@ package com.cxy.brush.leetcode.editor.cn;//给定一个 m x n 二维字符网格
 //
 // 
 //
-// 示例 1： 
+// 示例 1： https://www.bilibili.com/video/BV1TJ411K7hM
 //
 // 
 //输入：board = [["o","a","a","n"],["e","t","a","e"],["i","h","k","r"],["i","f","l"
@@ -98,7 +98,7 @@ class Solution {
     public List<String> findWords(char[][] board, String[] words) {
         Set<String> result = new HashSet<>();
         //使用候选词生成一个字典树
-        Trie wordsTrie = new Trie();
+        TrieNode wordsTrie = new TrieNode(' ');
         for(String word:words){
             wordsTrie.insert(word);
         }
@@ -150,149 +150,23 @@ class Solution {
 
 
 
-    class Trie {
+   class TrieNode{
+        private char val;
 
+       private TrieNode[] children;
+       //用string!=null 代替boolean表示是否是一个word，更方便
+       private String word;
 
-        /**
-         * true :节点为关键词的终结 ；false 不是
-         */
-        private boolean end = false;
+       public TrieNode(char x) {
+           children = new TrieNode[26];
+           word =null;
+           val = x;
+       }
+   }
 
-        /**
-         * 该节点的所有子节点(256个，英文+字符)
-         * 此题：26个小写英文
-         * key 下一个字符
-         * value 对应节点
-         */
-        private Map<Character, Trie> subNodes = new HashMap<>(26);
+   private void buildTrie(){
 
-
-        //存当前节点为止代表的单词(this 必须是叶子节点，否则是null)
-//        private  String word;
-
-
-        /**
-         * 添加节点
-         *
-         * @param key 词
-         * @param node key对应的node
-         */
-        private void addSubNodes(Character key, Trie node) {
-            subNodes.put(key, node);
-        }
-
-        /**
-         * 获取字符对应的节点
-         *
-         * @return TrieNode
-         */
-        private Trie getSubNode(Character key) {
-            return subNodes.get(key);
-        }
-
-        /**
-         * 是否是一个单词的最后一个字符(即叶子结点)
-         *
-         * @return
-         */
-        private boolean isKeywordEnd() {
-            return end;
-        }
-
-        /**
-         * 设置为叶子结点
-         * @param end
-         */
-        private void setKeywordEnd(boolean end) {
-            this.end = end;
-        }
-
-        /**
-         * 获得当前结点作获得的后辈结点数量
-         * @return
-         */
-        private int getSubNodeCount() {
-            return subNodes.size();
-        }
-
-
-
-        /**
-         * 本题题意: a-z
-         * 东亚文字范围： 0x2E80(11904)-0x9FFF(40959) (东亚文字范围)）
-         *
-         *  (不是字母数字字符)    或  非东亚文字  true直接跳过
-         */
-        private boolean isSymbol(char c) {
-            int ic = (int) c;
-//        return (!CharUtils.isAsciiAlphaLower(c)) && (ic < 0x2E80 || ic > 0x9FFF);
-            return !(c >= 'a' && c <= 'z');
-        }
-
-
-        //public API start
-        /** Initialize your data structure here. */
-        public Trie() {
-
-        }
-
-        /** Inserts a word into the trie. 根据一个单词，补充相关结点*/
-        public void insert(String word) {
-            Trie tempNode = this;//把当前节点作为起点
-            for (int i = 0; i < word.length(); i++) {
-                Character c = word.charAt(i);
-                //不处理题意以外的字符
-//                if (isSymbol(c)) {
-//                    continue;
-//                }
-                //找到当前字符对应的结点
-                Trie node = tempNode.getSubNode(c);
-                if (node == null) {
-                    node = new Trie();
-                    tempNode.addSubNodes(c, node);
-                }
-                tempNode = node;//进入下个节点
-                if (i == word.length() - 1) {
-                    // 关键词结束， 设置结束标志
-                    tempNode.setKeywordEnd(true);
-                }
-                //存入单词
-//                tempNode.word = word;
-            }
-        }
-
-        /** Returns if the word is in the trie.
-         *
-         * */
-        public boolean search(String word) {
-            if(word==null||word.equals("")){
-                return false;
-            }
-            Trie tempNode = this;//根结点开始出发
-            //试探word.length次
-            for(int i=0;i<word.length();++i){
-                if(tempNode.getSubNode(word.charAt(i))==null){
-                    return false;
-                }
-                tempNode=tempNode.getSubNode(word.charAt(i));
-            }
-            //如果结束，代表该word存在
-                return tempNode.isKeywordEnd();
-        }
-
-        /** Returns if there is any word in the trie that starts with the given prefix. */
-        public boolean startsWith(String prefix) {
-            Trie tempNode = this;
-            char p[]=prefix.toCharArray();
-            for(int i=0;i<prefix.length();++i){
-                if(tempNode.getSubNode(prefix.charAt(i))==null){
-                    return false;
-                }
-                tempNode=tempNode.getSubNode(prefix.charAt(i));
-            }
-            return true;
-        }
-    }
+   }
 
 
 
