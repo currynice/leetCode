@@ -26,6 +26,7 @@
 
 
 //leetcode submit region begin(Prohibit modification and deletion)
+//只能买卖一次
 class Solution121 {
     public int maxProfit(int[] prices) {
         //遍历中遇到的最低价
