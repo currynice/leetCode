@@ -23,6 +23,7 @@ import java.util.Map;
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution1 {
     public int[] twoSum(int[] nums, int target) {
+        //key:数值 value:下标
         Map<Integer,Integer> cache = new HashMap<>();
         for(int i=0;i<nums.length;i++){
             if(null==cache.get(target-nums[i])){

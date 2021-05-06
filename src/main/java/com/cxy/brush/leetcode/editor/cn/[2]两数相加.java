@@ -65,7 +65,7 @@ class Solution2 {
 //        return pre.next;
 //    }
 
-    public  ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+    public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
             int carry = 0;
             ListNode pre = new ListNode(-1);//返回 pre.next();
             ListNode curr = pre;
@@ -84,26 +84,27 @@ class Solution2 {
                 if(l2 !=null){
                     l2 = l2.next;
                 }
-                //进位 若为1 ,需要加到结果链表最后
-        if(carry == 1){
-            curr.next = new ListNode(1);
-        }
+
+                //进位 若为1 ,需要加到结果链表最后，否则，l1,l2都为nUll,这个1不在结果当中
+               if(carry == 1){
+                  curr.next = new ListNode(1);
+               }
 
             }
             return pre.next;
     }
 
-//    public static void main(String[] args) {
-//        ListNode l1 = new ListNode(2);
-//        l1.next = new ListNode(4);
-//        l1.next.next = new ListNode(3);
-//
-//        ListNode l2 = new ListNode(5);
-//        l2.next = new ListNode(6);
-//        l2.next.next = new ListNode(4);
-//       ListNode s = addTwoNumbers(l1,l2);
-//        System.out.println();
-//    }
+    public static void main(String[] args) {
+        ListNode l1 = new ListNode(2);
+        l1.next = new ListNode(4);
+        l1.next.next = new ListNode(3);
+
+        ListNode l2 = new ListNode(5);
+        l2.next = new ListNode(6);
+        l2.next.next = new ListNode(4);
+       ListNode s = addTwoNumbers(l1,l2);
+        System.out.println(s.val);
+    }
 
 }
 
