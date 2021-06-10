@@ -56,7 +56,7 @@ import java.util.List;
  *
 
  */
-class Solution {
+class Solution590 {
     public List<Integer> postorder0(Node root) {
         List<Integer> res = new ArrayList<>();
         helper(res,root);

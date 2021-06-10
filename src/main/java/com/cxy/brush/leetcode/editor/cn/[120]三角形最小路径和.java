@@ -51,7 +51,7 @@ package com.cxy.brush.leetcode.editor.cn;
 import java.util.List;
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
+class Solution120 {
     public int minimumTotal(List<List<Integer>> triangle) {
         //初始记录最底部的几个点的最短路径和，即自身
         List<Integer> minList = triangle.get(triangle.size()-1);

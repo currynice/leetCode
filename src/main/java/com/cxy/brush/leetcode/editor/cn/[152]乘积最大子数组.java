@@ -30,7 +30,7 @@ package com.cxy.brush.leetcode.editor.cn;//给你一个整数数组 nums ，请�
 //     三者取大，以及三者取小
 //
 
-class Solution {
+class Solution152 {
     public int maxProduct(int[] nums) {
         int maxF = nums[0], minF = nums[0], ans = nums[0];
         int length = nums.length;

@@ -48,7 +48,7 @@ package com.cxy.brush.leetcode.editor.cn;//给你一个整数数组 nums ，找�
 
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
+class Solution300 {
     public int lengthOfLIS(int[] nums) {
         if (nums.length == 0) {
             return 0;

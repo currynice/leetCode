@@ -1,4 +1,5 @@
-//数字 n 代表生成括号的对数，请你设计一个函数，用于能够生成所有可能的并且 有效的 括号组合。 
+package com.cxy.brush.leetcode.editor.cn;
+//数字 n 代表生成括号的对数，请你设计一个函数，用于能够生成所有可能的并且 有效的 括号组合。
 //
 // 
 //
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
+class Solution22 {
 
     List<String> result = new ArrayList<>();
 
