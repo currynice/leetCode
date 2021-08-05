@@ -20,45 +20,34 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+
+/**
+ *
+ */
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution1 {
+
     public int[] twoSum(int[] nums, int target) {
         //key:数值 value:下标
-        Map<Integer,Integer> cache = new HashMap<>();
-        for(int i=0;i<nums.length;i++){
-            if(null==cache.get(target-nums[i])){
-                cache.put(nums[i],i);
-            }else {
-                return new int[]{i,cache.get(target-nums[i])};
-            }
-        }
-        return null;
+      Map<Integer, Integer> cache = new HashMap<>();
+      for(int i=0;i<nums.length;i++){
+          //当前元素是否存在对应值
+          if(null == cache.get(target-nums[i])){
+              cache.put(nums[i],i);
+          }else{
+              return new int[]{i,cache.get(target-nums[i])};
+          }
+      }
+      return null;
     }
 
+
     /**
-     * 双指针(前提: nums升序排列，本题不适用，sort会损失原数组的下标信息)
+     * 头尾双指针(前提: 需要sort 使 nums升序排列，本题不适用，因为会损失原数组的下标信息)
      * @param nums
      * @param target
      * @return
      */
-    public int[] twoSum2(int[] nums, int target) {
-        Arrays.sort(nums);
-        int left = 0,right = nums.length - 1;
-        //一前一后
-        while(left<right){
-            int sum = nums[left] + nums[right];
-            if(sum == target){
-                return new int[]{left,right};
-            }else if(sum > target){
-                //大了,sum小一点
-                right--;
-            }else if(sum < target){
-                //大了,sum 大一点
-                left++;
-            }
-        }
-        return new int[]{-1,-1};
-    }
 
 }
 //leetcode submit region end(Prohibit modification and deletion)
