@@ -57,15 +57,44 @@ class Solution {
 
 
     //way2
+
+    /**
+     * len 表示总长度：
+     *    奇数个的话，需要知道第 len/2 +1 个，遍历 len/2 +1 次，
+     *    偶数个的话，需要知道第len/2 和第len/2 +1 个，也是遍历 （len+1）/2 次
+     *
+     *    使用last 和 curr 表示上一次循环的结果和当前结果
+     * @param nums1
+     * @param nums2
+     * @return
+     */
     public  double findMedianSortedArrays(int[] nums1, int[] nums2) {
-        int numLength = nums1.length + nums2.length;
-        if(numLength %2 ==0){
-            //元素总数为偶数 , 需要两个元素计算得出(如10个元素，中位数是第5小的元素 和 第6小的元素 的平均值)
-            return (getKthSlow(nums1,nums2,numLength / 2) + getKthSlow(nums1,nums2,numLength / 2+1))/2.0d;
-        }else {
-            //元素总数为奇数,k =(m+n)/2+1 ,k是真实存在的元素(如11个元素，第6小的元素即为中位数)
-            return getKthSlow(nums1,nums2,numLength/2+1)/1.0d;
+        int m = nums1.length;
+        int n = nums2.length;
+        int len = m + n;
+        int last = -1, curr = -1;
+        int aStart = 0, bStart = 0;
+
+        //遍历 (len+1)/2  次
+        for (int i = 0; i <= len / 2; i++) {
+            //记录下上一次遍历的结果
+            last = curr;
+            //aStart没有到最后 且 （  aStart位置的数小于bStart位置的数[ 注意 bStart别越界]  ）
+            if (aStart < m && (bStart >= n || nums1[aStart] < nums2[bStart])) {
+                //aStart后移
+                curr = nums1[aStart++];
+            } else {
+                //bStart后移
+                curr = nums2[bStart++];
+            }
         }
+
+        //偶数
+        if (len %2 ==0)
+            return (last + curr) / 2.0;
+        else
+            //奇数
+            return curr;
 
     }
 
@@ -136,70 +165,7 @@ class Solution {
     }
 
 
-    /**
-     * 一步一步地 移动，比较慢的找 两个有序数组第 k 大 的元素
-     * 维护两个指针，初始时分别指向两个数组的下标 0的位置，
-     * 每次将指向较小值的指针后移一位（如果一个指针已经到达数组末尾，不再移动，仅移动另一个数组的指针），直到到达中位数的位置。
-     * @param nums1
-     * @param nums2
-     * @param k
-     * @return
-     */
-    private  int getKthSlow(int[] nums1, int[] nums2, int k){
-        int pointer1 = 0;
-        int pointer2 = 0;
 
-        //要操作 k-1次 后，返回最小的
-        int step = k-1;
-
-        if(nums1.length==0){
-            System.out.println("两个数组第"+k+"小的元素是:"+nums2[k-1]);
-
-            return nums2[k-1];
-        }
-
-        if(nums2.length==0){
-            System.out.println("两个数组第"+k+"小的元素是:"+nums1[k-1]);
-
-            return nums1[k-1];
-        }
-
-
-        for(int i=0;i<step;i++){
-
-            if(pointer1  == nums1.length && pointer2<nums2.length){
-                    pointer2++;
-                    break;
-            }else if(pointer2 == nums2.length && pointer1<nums1.length){
-                pointer1++;
-                break;
-            }else {
-            int v1 = nums1[Math.min(pointer1, nums1.length-1)];
-            int v2 = nums2[Math.min(pointer2, nums2.length-1)];
-            //移除较小的
-            if(v1<=v2){
-                pointer1++;
-            }else {
-                pointer2++;
-            }
-            }
-        }
-
-        if(pointer1 == nums1.length){
-            System.out.println("两个数组第"+k+"小的元素是:"+nums2[pointer2]);
-
-            return nums2[pointer2];
-        }
-
-        if(pointer2 == nums2.length){
-            System.out.println("两个数组第"+k+"小的元素是:"+nums1[pointer1]);
-            return nums1[pointer1];
-        }
-
-        int result =  Math.min(nums1[pointer1],nums2[pointer2]);
-        System.out.println("两个数组第"+k+"小的元素是:"+result);
-        return result;
-    }
 
 
 
@@ -212,9 +178,8 @@ class Solution {
         int[] nums1 = new int[]{1};
         int[] nums2 = new int[]{2,3,4,5,6};
         Solution s = new Solution();
-//        System.out.println(s.findMedianSortedArrays(nums1,nums2));
-        s.getKthSlow(nums1,nums2,3);
-        s.getKthSlow(nums1,nums2,4);
+        System.out.println(s.findMedianSortedArrays(nums1,nums2));
+
 
     }
 }
