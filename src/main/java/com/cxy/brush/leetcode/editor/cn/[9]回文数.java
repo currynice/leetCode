@@ -52,8 +52,58 @@ package com.cxy.brush.leetcode.editor.cn;
 
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution9 {
+class Solution {
+
     public boolean isPalindrome(int x) {
+        // 负数不是回文
+        if(x<0){
+            return false;
+        }
+
+        //翻转后比较和原始数字是否相等，翻转参考第七道题目[整数反转]的两个方法
+        int original = x;
+
+        //solution1 start -----------------------------------
+//        long reverse = 0;
+//
+//        while(x!=0){
+//            reverse = reverse*10 +x%10;
+//            x /= 10;
+//        }
+//       return original == (int)reverse;
+        //solution1 end -----------------------------------
+
+        //solution2 start -----------------------------------
+
+        int reverse = 0;
+
+        while(x!=0){
+
+            //拿到最后一位
+            int lastNum = x%10;
+
+            if(reverse > 214748364 || (reverse==214748364 && lastNum>7)){
+                reverse=0;
+                break;
+            }
+            //不用考虑负数的情况
+
+            reverse = reverse*10 + lastNum;
+
+            //消除最后一位
+            x /= 10;
+        }
+        return original==reverse;
+
+        //solution2 end -----------------------------------
+
+    }
+
+
+
+
+
+        public boolean isPalindrome2(int x) {
         //负数一定不是回文数
         if (x < 0) {
             return false;

@@ -9,8 +9,8 @@ package com.cxy.brush.leetcode.editor.cn;
 // 读入下一个字符，直到到达下一个非数字字符或到达输入的结尾。字符串的其余部分将被忽略。 
 // 将前面步骤读入的这些数字转换为整数（即，"123" -> 123， "0032" -> 32）。如果没有读入数字，则整数为 0 。必要时更改符号（从步骤 
 //2 开始）。 
-// 如果整数数超过 32 位有符号整数范围 [−231, 231 − 1] ，需要截断这个整数，使其保持在这个范围内。具体来说，小于 −231 的整数应该被固
-//定为 −231 ，大于 231 − 1 的整数应该被固定为 231 − 1 。 
+// 如果整数数超过 32 位有符号整数范围 [−2^31, 2^31 − 1] ，需要截断这个整数，使其保持在这个范围内。具体来说，小于 −2^31 的整数应该被固
+//定为 −2^31 ，大于 2^31 − 1 的整数应该被固定为 2^31 − 1 。
 // 返回整数作为最终结果。 
 // 
 //
@@ -114,65 +114,72 @@ package com.cxy.brush.leetcode.editor.cn;
 
 //leetcode submit region begin(Prohibit modification and deletion)
 
+import java.util.Arrays;
+
 /**
  * 字符如何隐式转换为数字：
  *     一个char类型字符减去 '0' 隐式转换为数字
  *     一个数字加上'0' 隐式的转换为字符
  *
  *     System.out.println('2'-'0');
- *     System.out.println((char)(3 + '0'));
  *     System.out.println('z'-'0');
- *     System.out.println('\0');
+ *     System.out.println((char)(3 + '0'));
+ *
  *
  */
 class Solution8 {
 
 
-    /**
-     * 将字符串转尽可能为数字
-     * @param s
-     * @return 没解析出数字，返回0
-     */
-    public int myAtoi(String s) {
-        if(s==null||"".equals(s.trim())){
+    public  int myAtoi(String s) {
+        if(s==null || s.trim().equals("")){
             return 0;
         }
 
-        //结果正负(默认正)
-        boolean negflag = true;
+        //默认正数
+        boolean flag = true;
 
-        int res = 0;
+        int result = 0;
 
-        //排空格，' ';排'.'
-        int a=0;
-        while(s.charAt(a)==' '||s.charAt(a)=='\0'){
-//            System.out.println("排除了:"+s.charAt(a));
-            a++;
+        int pointer = 0;
+
+        //step1: 排除前导空格
+        while(s.charAt(pointer)==' '){
+            pointer++;
         }
 
-        //只认可 排除无效字符后出现的第一个'+' 或'-'
-        if(s.charAt(a)=='+' || s.charAt(a)=='-'){
-            negflag = s.charAt(a)=='+';
-            a++;
+        //step2: 只承认排除前导空格后的正负号（如果存在的话）
+        if(s.charAt(pointer)=='+' || s.charAt(pointer)=='-'){
+            flag = (s.charAt(pointer) == '+');
+            pointer++;
         }
 
-        for(char c : s.substring(a).toCharArray()){
+        System.out.println(Arrays.toString(s.substring(pointer).toCharArray()));
 
+        for(char c: s.substring(pointer).toCharArray()){
 
-
-            //考虑溢出问题
-            if(isDigit(c)) {
-                Integer te = isOver(negflag?res:-res,c);
+            if(isDigit(c)){
+                //如果会溢出，直接返回，不再解析； 如果不会溢出，te是null
+                Integer te = isOver(flag?result:-result,c);
                 if(te !=null){
                     return te;
                 }
-                res = res * 10 + (c - '0');
+                result = result*10 + c-'0';
             }else {
-               break;
+                // 读到非数字，跳出循环，如果之前有数字(result非0)，可以正常返回
+                // 或者就是第一次迭代就跳出循环了
+                break;
             }
         }
-        return negflag?res:-res;
+
+        return flag?result:-result;
     }
+
+
+    public static void main(String[] args) {
+        String s = "     -1111 aaaaaa22";
+//        System.out.println(myAtoi(s));
+    }
+
 
 
     /**
@@ -181,16 +188,18 @@ class Solution8 {
      * @param c
      * @return
      */
-    private boolean isDigit(char c){
+    private static boolean isDigit(char c){
          return c>='0' && c<='9';
     }
 
     /**
      * 是否溢出 over，溢出截断
      * @param c
-     * @return
+     * @return 如果c加到 res后发生溢出，返回 Integer.MIN_VALUE 或 Integer.MAX_VALUE,
+     * 正常的话返回 null
+     *
      */
-    private Integer isOver(int res,char c){
+    private static Integer isOver(int res,char c){
         // 1.当前部分加上一位后已经小于 Int32最小值的前9位
         // 2.当前部分 等于Int32最小值，但最后一位小于 -8
         if(res<-214748364 ||(res==-214748364 && -(c-'0')<-8)){
@@ -207,18 +216,6 @@ class Solution8 {
         return null;
     }
 
-
-//    assert(p!=NULL);
-//    int res =0;
-//    bool negflag = false;
-//	while(*p==' ' || *p == '\t')
-//    p++;
-//	if('+' == *p || '-' == *p)
-//    negflag =(*p++ == '+');
-//	while(isdigit(*p))
-//    res = res*10 +  (*p++-'0');
-//
-//	return negflag?(0-res):res;
 
 }
 //leetcode submit region end(Prohibit modification and deletion)

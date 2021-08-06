@@ -62,6 +62,7 @@ import java.util.stream.Collectors;
 
 class Solution6 {
 
+
     /**
      * 遍历每个字符c ，整体上看，c所在的行是 1,2,..,n,（方向反转）...,2,1
      * 因此，模拟 当前字符行索引，遍历s时把每个字符c填到正确的行 res[i]
@@ -70,31 +71,41 @@ class Solution6 {
      * @return
      */
     public  String convert(String s, int numRows) {
+        if(numRows <2){
+            return s;
+        }
 
-        if(numRows < 2) return s;
-        //numRows，每行单独存
-        List<StringBuilder> rows = new ArrayList<>();
-        //init
-        for(int i = 0; i < numRows; i++) rows.add(new StringBuilder());
+        //一行一行地存
+        List<StringBuilder> rows = new ArrayList<>();;
+        for(int a=0;a<numRows;a++){
+            rows.add(new StringBuilder());
+        }
+        //第一个字符将落在第 0 行
+        int i=0;
+        int flag= -1;
 
-        //当前行，初始第0行
-        int i = 0;
-
-        // flag==1: 从上往下，flag==-1:从下往上
-        int flag = -1;
-
-        for(char c : s.toCharArray()) {
-            //第i 行加上字符c
+        for(char c: s.toCharArray()){
             rows.get(i).append(c);
-            //当前在第0行或最后一行，更改flag，更改下一个字符的填充方向下一行
-            if(i == 0 || i == numRows -1) {
-                flag = - flag;
-                rows.get(i).append("*");
+
+            //如果已经到了第 0 行 或者第 numRows-1 行，需要改变方向
+            if(i==0 || i==numRows-1){
+                flag = -flag;
             }
+
+            // flag = 1 ,表示从上到下  (0，1，2，。。。numRows-1)
+            // flag = -1 ,表示从下到上 (numRows-1，。。。2，1，0)
             i += flag;
         }
         return rows.stream().map(StringBuilder::toString).collect(Collectors.joining());
 
+    }
+
+
+
+
+    public static void main(String[] args) {
+        String s = "AB";
+        System.out.println(new Solution6().convert(s,1));
     }
 
 

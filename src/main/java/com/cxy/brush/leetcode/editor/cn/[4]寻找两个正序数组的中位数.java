@@ -40,20 +40,20 @@ package com.cxy.brush.leetcode.editor.cn;
 
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
+class Solution4 {
 
 
     //way1
-//    public  double findMedianSortedArrays(int[] nums1, int[] nums2) {
-//        int numLength = nums1.length + nums2.length;
-//        if(numLength %2 ==0){
-//            //元素总数为偶数 , 需要两个元素计算得出(如10个元素，中位数是第5小的元素 和 第6小的元素 的平均值)
-//            return (getKth(nums1,nums2,numLength / 2) + getKth(nums1,nums2,numLength / 2+1))/2.0d;
-//        }else {
-//            //元素总数为奇数,k =(m+n)/2+1 ,k是真实存在的元素(如11个元素，第6小的元素即为中位数)
-//            return getKth(nums1,nums2,numLength/2+1)/1.0d;
-//        }
-//    }
+    public  double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int numLength = nums1.length + nums2.length;
+        if(numLength %2 ==0){
+            //元素总数为偶数 , 需要两个元素计算得出(如10个元素，中位数是第5小的元素 和 第6小的元素 的平均值)
+            return (getKth(nums1,nums2,numLength / 2) + getKth(nums1,nums2,numLength / 2+1))/2.0d;
+        }else {
+            //元素总数为奇数,k =(m+n)/2+1 ,k是真实存在的元素(如11个元素，第6小的元素即为中位数)
+            return getKth(nums1,nums2,numLength/2+1)/1.0d;
+        }
+    }
 
 
     //way2
@@ -61,42 +61,64 @@ class Solution {
     /**
      * len 表示总长度：
      *    奇数个的话，需要知道第 len/2 +1 个，遍历 len/2 +1 次，
-     *    偶数个的话，需要知道第len/2 和第len/2 +1 个，也是遍历 （len+1）/2 次
+     *    偶数个的话，需要知道第len/2 和第len/2 +1 个，也是遍历 len/2 +1 次
      *
      *    使用last 和 curr 表示上一次循环的结果和当前结果
      * @param nums1
      * @param nums2
      * @return
      */
-    public  double findMedianSortedArrays(int[] nums1, int[] nums2) {
-        int m = nums1.length;
-        int n = nums2.length;
-        int len = m + n;
-        int last = -1, curr = -1;
-        int aStart = 0, bStart = 0;
+//    public  double findMedianSortedArrays(int[] nums1, int[] nums2) {
+//            int l1 = nums1.length;
+//            int l2 = nums2.length;
+//
+//            int length = l1 + l2;
+//
+//             //last : 保存上一次遍历的结果，在遍历才开始时，用 curr赋值
+//             //curr : 每次遍历结束，更新该值
+//
+//             int last=-1,curr = -1;
+//
+//             int aSide=0,bSide =0;
+//
+//            //遍历 length/2 +1 次
+//            for(int i=0;i<=length/2;i++){
+//                last = curr;
+//
+//                //
+//                if( aSide<l1 && ( bSide>=l2 || nums1[aSide] <nums2[bSide] ) ){
+//                    curr = nums1[aSide];
+//                    aSide++;
+//                }else {
+//                    curr = nums2[bSide];
+//                    bSide++;
+//                }
+//
+//            }
+//
+//            //偶数
+//            if(length %2==0){
+//                return (last + curr)/2.0;
+//            }else {
+//                //奇数
+//                return curr/1.0;
+//            }
+//    }
 
-        //遍历 (len+1)/2  次
-        for (int i = 0; i <= len / 2; i++) {
-            //记录下上一次遍历的结果
-            last = curr;
-            //aStart没有到最后 且 （  aStart位置的数小于bStart位置的数[ 注意 bStart别越界]  ）
-            if (aStart < m && (bStart >= n || nums1[aStart] < nums2[bStart])) {
-                //aStart后移
-                curr = nums1[aStart++];
-            } else {
-                //bStart后移
-                curr = nums2[bStart++];
-            }
-        }
 
-        //偶数
-        if (len %2 ==0)
-            return (last + curr) / 2.0;
-        else
-            //奇数
-            return curr;
 
-    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * 获得两个有序数组中 第 k大的元素
@@ -109,22 +131,26 @@ class Solution {
      *            2)如果v3=v2(v1>v2): nums2中下标 0 - k/2-1 的元素都不可能是第 k 小的元素。全部可以 "舍弃"不看
      *            3)如果v1=v2: 可以归入第一种情况
      *
-     *           因为"舍弃"了x个元素，新目标从 第k小变为第 k-x 小
+     *           "舍弃"了x个元素，新目标从 第k小变为第 k-x 小
      * @param nums1
      * @param nums2
      * @param k
      * @return
      */
-
     private  int getKth(int[] nums1, int[] nums2, int k){
 
-        //两个数组有效部分 第 target 个元素
+        //两个数组有效部分 第 target 个大元素，初始是k
         int target = k;
 
-        int valid1 = 0,valid2 = 0;
+        //valid1 : nums1 有效部分起始index，有效部分 [valid1,length1-1]的闭区间
+        //valid2:  nums2 有效部分起始index, 有效部分 [valid2,length2-1]的闭区间
+        int valid1 = 0, valid2 = 0;
         while(true){
 
-            //corner case ，当某一个数组已经全部舍弃不看，在另一个数组的有效部分返回第k大的元素。
+            //corner case
+
+            // ，当某任何数组已经全部舍弃不看（valid 最大值是length-1），
+            // 返回另一个数组的有效部分的 第 target大的元素。
             if(valid1 == nums1.length){
                 return nums2[valid2+ target-1];
             }
@@ -133,13 +159,12 @@ class Solution {
                 return nums1[valid1 + target-1];
             }
 
-            // 如果 target = 1，返回两个数组有效部分第一个元素(index=valid_ )中的更小值。
+            // 如果 target = 1，返回两个数组有效部分第一个元素(index=valid )的较小值。
             if(target==1){
                 return Math.min(nums1[valid1],nums2[valid2]);
             }
 
-
-            //比较 v1=nums1[k/2 -1]  和 v2=nums2[k/2 -1] ，考虑数组越界
+            //直接比较 v1 =nums1[k/2 -1]  和 v2=nums2[k/2 -1] ，考虑数组越界
             int compare1 = Math.min(valid1 + target/2 - 1, nums1.length-1);
             int compare2 = Math.min(valid2 + target/2 - 1, nums2.length-1);
 
@@ -175,12 +200,10 @@ class Solution {
 
 
     public static void main(String[] args) {
-        int[] nums1 = new int[]{1};
-        int[] nums2 = new int[]{2,3,4,5,6};
-        Solution s = new Solution();
+        int[] nums1 = new int[]{1,2};
+        int[] nums2 = new int[]{3,4};
+        Solution4 s = new Solution4();
         System.out.println(s.findMedianSortedArrays(nums1,nums2));
-
-
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
