@@ -85,9 +85,6 @@ class Solution {
             StringBuilder result = new StringBuilder();
 
             for(int i=0;i<values.length;i++){
-                if(num==0){
-                    break;
-                }
 
                 //如 values[i]=1000 , 阿拉伯数字 3999 大于 1000，在结果中加入 1000 对应的罗马数字 M
                 while(num >=values[i]){
