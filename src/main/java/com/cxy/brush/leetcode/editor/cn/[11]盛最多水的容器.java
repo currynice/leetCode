@@ -36,9 +36,11 @@ package com.cxy.brush.leetcode.editor.cn;
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution11 {
     public int maxArea(int[] height) {
+        //i: leftIndex
+        //j: rightIndex
         int i = 0, j = height.length - 1, maxArea = 0;
         while(i < j){
-            //更新maxArea后，向内移动短板
+            //更新maxArea后，向内移动较短的板
             maxArea = height[i] < height[j] ?
                     Math.max(maxArea, (j - i) * height[i++]):
                     Math.max(maxArea, (j - i) * height[j--]);

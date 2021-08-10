@@ -52,7 +52,7 @@ package com.cxy.brush.leetcode.editor.cn;
 
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
+class Solution9 {
 
     public boolean isPalindrome(int x) {
         // 负数不是回文
