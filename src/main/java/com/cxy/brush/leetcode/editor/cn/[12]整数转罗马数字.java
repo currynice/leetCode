@@ -72,34 +72,39 @@ package com.cxy.brush.leetcode.editor.cn;
 
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution12 {
+class Solution {
+
 
 
         int[] values =     {1000, 900, 500, 400,  100,  90,  50,  40,   10,   9,    5,   4,    1};
         String[] symbols = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
 
 
-        public String intToRoman(int num) {
-            StringBuffer roman = new StringBuffer();
+
+         public String intToRoman(int num) {
+            StringBuilder result = new StringBuilder();
+
             for(int i=0;i<values.length;i++){
-                int value= values[i];
-                while (num>=value){
-                    roman.append(symbols[i]);
-                    num -= value;
-                }
-                if(num == 0){
+                if(num==0){
                     break;
                 }
 
+                //如 values[i]=1000 , 阿拉伯数字 3999 大于 1000，在结果中加入 1000 对应的罗马数字 M
+                while(num >=values[i]){
+                    result.append(symbols[i]);
+                    //加入后，num 减去 阿拉伯数字， 3999 -> 2999 ->1999-> 999
+                    num -= values[i];
+                }
             }
 
+            return result.toString();
 
-            return roman.toString();
-        }
-
-
+         }
 
 
+//    public static void main(String[] args) {
+//        System.out.println(new Solution12().intToRoman(1));
+//    }
 
     }
 
