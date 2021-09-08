@@ -27,62 +27,64 @@ import java.util.List;
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution18 {
+
     public  List<List<Integer>> fourSum(int[] nums, int target) {
         List<List<Integer>> result = new ArrayList<>();
+
         if(nums.length<4){
             return result;
         }
+
         Arrays.sort(nums);
 
-        //锁两个数
-        //第一个锁住的数，从下标0开始遍历，后面至少需要三个数，所以，从 0- （length-4） 即a<nums.length-3
-            for(int a=0;a<nums.length-3;a++) {
-            //排重
-            if (a != 0 && nums[a] == nums[a - 1]) {
+        //lock (a 后面至少三个数，a+3<nums.length)
+        for(int a=0;a<nums.length-3;a++){
+            //去重
+            if(a>0 && nums[a]==nums[a-1]){
                 continue;
             }
 
-            //第二个锁住的数，从下标a+1开始遍历，后面至少需要2个数，所以，从 0- （length-3）即 b<nums.length-2
-            for(int b=a+1;b<nums.length-2;b++) {
-                //排重
-                if (b != a+1 && nums[b] == nums[b - 1]) {
+            //lock(b,b后面至少两个数,b+2<nums.length)
+            for(int b=a+1;b<nums.length-2;b++){
+                //去重
+                if(b>a+1 && nums[b]==nums[b-1]){
                     continue;
                 }
-                //左右指针在b,length-1之间尝试对撞
-                int left = b+1, right = nums.length - 1;
 
-                while (left < right) {
-                    int sum = nums[a] + nums[b]+ nums[left] + nums[right];
-                    if (sum<target) {
-                        //子数组提供的元素和(left+right)小了,left右移
+                //剩余两个双指针：left ,right
+                int left = b+1;
+                int right = nums.length-1;
+
+                while(left<right){
+                    int total = nums[a]+nums[b]+nums[left]+nums[right];
+                    if(total<target){
+                        //left+right 小了
                         left++;
-                    } else if (sum>target) {
-                        //子数组提供的元素和(left+right)大了,right左移
+                    }else if (total>target){
+                        //left+right 大了
                         right--;
-                    } else {
-                        //find a solve
+                    }else {
                         result.add(Arrays.asList(nums[a],nums[b],nums[left],nums[right]));
-                        //这里也要去重
-                        //因为已经匹配上了，所以如果 left右边 还是一样的值，那么肯定会重
-                        while (left<right && nums[left] == nums[left+1]) left++;
-                        //因为已经匹配上了，所以如果right左边 还是一样的值，那么肯定会重
-                        while (left<right && nums[right] == nums[right-1]) right--;
+                        //去重
+                        while(left<right && nums[left]==nums[left+1]){
+                            left++;
+                        }
+                        while (left<right &&  nums[right]==nums[right-1]){
+                            right--;
+                        }
                         left++;
                         right--;
                     }
                 }
 
             }
+
         }
+
 
         return result;
     }
 
 
-//    public static void main(String[] args) {
-//        int[] nums = new int[]{0,0,0,0};
-//        List<List<Integer>> result = fourSum(nums,0);
-//        System.out.println(Arrays.toString(result.toArray()));
-//    }
 }
 //leetcode submit region end(Prohibit modification and deletion)
