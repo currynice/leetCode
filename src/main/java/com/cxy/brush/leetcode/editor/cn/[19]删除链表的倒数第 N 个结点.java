@@ -58,7 +58,7 @@ import java.util.List;
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
-class Solution {
+class Solution19 {
 
     /**
      * 方法一: 计算链表长度后，删除指定节点
@@ -135,6 +135,7 @@ class Solution {
             second = second.next;
             first = first.next;
         }
+        // 删除 first.next
         first.next = first.next.next;
         return dummy.next;
 
@@ -142,13 +143,13 @@ class Solution {
 
 
     public static void main(String[] args) {
-        Solution s = new Solution();
+
         ListNode head = new ListNode(1);
         head.next = new ListNode(2);
         head.next.next = new ListNode(3);
         head.next.next.next = new ListNode(4);
         head.next.next.next.next = new ListNode(5);
-        s.removeNthFromEnd(head,2);
+        new Solution19().removeNthFromEnd(head,2);
 
     }
 
