@@ -47,6 +47,7 @@ import com.cxy.knowledge.list.removeNthFromEnd;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * Definition for singly-linked list.
@@ -89,10 +90,10 @@ class Solution19 {
     }
 
 
-    public ListNode removeNthFromEnd2(ListNode head, int n) {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
         ListNode dummy = new ListNode(0, head);
         //先进后出
-        Deque<ListNode> stack = new LinkedList<>();
+        Stack<ListNode> stack = new Stack<>();
         ListNode cur = dummy;
 
         //全部入栈 (每个栈元素都时一个链表)
@@ -119,7 +120,7 @@ class Solution19 {
      * @param n
      * @return
      */
-    public ListNode removeNthFromEnd(ListNode head, int n) {
+    public ListNode removeNthFromEnd3(ListNode head, int n) {
         ListNode dummy = new ListNode(0, head);
 
         ListNode first = dummy;
@@ -149,7 +150,7 @@ class Solution19 {
         head.next.next = new ListNode(3);
         head.next.next.next = new ListNode(4);
         head.next.next.next.next = new ListNode(5);
-        new Solution19().removeNthFromEnd(head,2);
+//        new Solution19().removeNthFromEnd(head,2);
 
     }
 
