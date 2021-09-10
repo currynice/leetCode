@@ -44,8 +44,56 @@ class Solution {
 
     /**
      * 非递归写法
-     * @param head
-     * @return
+     *
+     0:    0 -> 1 —> 2 -> 3 -> 4 -> 5
+          pre
+          dump
+
+     {
+     start = dump.next
+     end = dump.next.next
+     }
+
+     1:    0 ->   1    —>   2   ->  3 -> 4 -> 5
+           pre
+           dump   start     end
+
+
+     {
+     dump.next = end
+     }
+
+     0 ->   2   ->  3 -> 4 -> 5
+     pre
+     dump   end
+
+     1  —>   2   ->  3 -> 4 -> 5
+     start
+
+     {
+     start.next = end.next
+     }
+
+     1   —>  3 -> 4 -> 5
+     start
+
+     {
+     end.next = start
+     }
+
+     0   ->   2   ->  1  —>   3 -> 4 -> 5
+     pre
+     dump     end     start
+
+     {
+     dump = start
+     }
+
+     0   ->   2   ->  1  —>   3 -> 4 -> 5
+     pre     end      start
+                      dump
+
+
      */
     public ListNode swapPairs(ListNode head) {
         ListNode pre = new ListNode(0,head);
