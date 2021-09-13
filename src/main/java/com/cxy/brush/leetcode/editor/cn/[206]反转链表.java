@@ -30,10 +30,14 @@ class Solution206 {
         //移动指针
         ListNode remove = head;
         while(remove!=null){
-           ListNode temp = remove.next;
+            //暂存next
+           ListNode next = remove.next;
+           //改变边
            remove.next = pre;
+
+           //移动 remove 和 pre
            pre = remove;
-           remove = temp;
+           remove = next;
         }
         return pre;
     }

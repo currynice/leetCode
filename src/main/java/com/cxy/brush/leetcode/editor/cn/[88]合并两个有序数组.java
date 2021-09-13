@@ -27,23 +27,26 @@ package com.cxy.brush.leetcode.editor.cn;
 class Solution88 {
     public void merge(int[] nums1, int m, int[] nums2, int n) {
 
-        int len = nums1.length-1;
 
-        int len1 = m-1;
-        int len2 = n-1;
-        while(len1>=0 && len2 >=0){
-            if(nums1[len1]>nums2[len2]){
-                nums1[len] = nums1[len1];
-                len--;
-                len1--;
-            }else if(nums1[len1] <= nums2[len2]){
-                nums1[len] = nums2[len2];
-                len--;
-                len2--;
+        //从各自有效部分的末尾开始
+        int i = m-1;
+        int j = n-1;
+        //要填数k次数
+        for(int k =nums1.length-1; k>=0;k--){
+
+            /**
+             * j 到头了（小于0），只能考虑放i
+             * i，j都没到头，正常考虑大小，较大的放在k位置上
+             * j没到头，i到头，只能放j
+             */
+            if(j<0 || (i>=0&&nums1[i]>=nums2[j])){
+                nums1[k] = nums1[i];
+                i--;
+            }else {
+                nums1[k] = nums2[j];
+                j--;
             }
         }
-            System.arraycopy(nums2,0,nums1,0,len2+1);
-
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
