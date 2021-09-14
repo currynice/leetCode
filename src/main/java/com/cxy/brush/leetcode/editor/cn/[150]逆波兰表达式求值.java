@@ -81,8 +81,15 @@ import java.util.Stack;
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution150 {
+
+
+    /**
+     * 后缀表达式求值：  op A B
+     * @param tokens
+     * @return
+     */
     public int evalRPN(String[] tokens) {
-        //遇到数字入栈，遇到运算符出栈顶两个数字计算，结果压入栈
+        //遇到数字入栈（用符号来判断，否则数字判断表达式太长了【考虑负数】），遇到运算符出栈顶两个数字计算，结果压入栈
         List<String> operators = Arrays.asList("+","-","*","/");
 
         Stack<String> stack = new Stack<>();
@@ -90,13 +97,16 @@ class Solution150 {
 
         for(String token:tokens){
             if(!operators.contains(token)){
+                //数字
                 stack.push(token);
             }else {
-                int op1 = Integer.parseInt(stack.pop());
-                int op2 = Integer.parseInt(stack.pop());
+                //遇到op， 出栈顶两个数字
+                // 因为 2,1,+ 相当于 2+1，即 num2 + num1
+                int num1 = Integer.parseInt(stack.pop());
+                int num2 = Integer.parseInt(stack.pop());
 
 
-                stack.push(eval(op2,op1,token)+"");
+                stack.push(eval(num2,num1,token)+"");
             }
         }
 
@@ -105,15 +115,22 @@ class Solution150 {
     }
 
 
-    private int eval(int op1,int op2,String operators){
+    /**
+     * 四则运算
+     * @param num1
+     * @param num2
+     * @param operators
+     * @return
+     */
+    private int eval(int num1,int num2,String operators){
         if(operators.equals("+")){
-            return op1+op2;
+            return num1+num2;
         }else if(operators.equals("-")){
-            return op1-op2;
+            return num1-num2;
         }else if(operators.equals("*")){
-            return op1*op2;
+            return num1*num2;
         }else if(operators.equals("/")){
-            return op1/op2;
+            return num1/num2;
         }
 
         return 0;
