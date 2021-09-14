@@ -31,7 +31,7 @@ class Solution88 {
         //从各自有效部分的末尾开始
         int i = m-1;
         int j = n-1;
-        //要填数k次数
+        //要填数 k次
         for(int k =nums1.length-1; k>=0;k--){
 
             /**

@@ -47,7 +47,11 @@ package com.cxy.brush.leetcode.editor.cn;
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution26 {
-    public static int removeDuplicates(int[] nums) {
+
+
+    //[0,0,1,1,1,2,2,3,3,4]
+
+    public int removeDuplicates0(int[] nums) {
         if(nums==null||nums.length==0){
             return 0;
         }
@@ -58,33 +62,12 @@ class Solution26 {
                 nums[slow+1] = nums[fast];
                 slow++;
             }
-            //重复,下一次循环fast++
+            //重复,下一次循环fast++,空下来的位置可以给不重复元素用
         }
         return slow+1;
     }
 
 
-    public int removeDuplicates0(int[] nums) {
-        if( nums.length ==0){
-            return 0;
-        }
 
-        int n = 0;
-
-        for(int i=0;i<nums.length;i++){
-            if(i==0||nums[i]!=nums[i-1]){
-                nums[n] = nums[i];
-                n++;
-            }
-        }
-
-        return n;
-    }
-
-    public static void main(String[] args) {
-        int[] i= new int[]{1,1,2};
-        System.out.println(removeDuplicates(i));
-        System.out.println();
-    }
 }
 //leetcode submit region end(Prohibit modification and deletion)

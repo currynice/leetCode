@@ -6,6 +6,7 @@ package com.cxy.knowledge.list;
 //输出: NULL<-1<-2<-3<-4<-5
 
 
+import com.cxy.brush.leetcode.editor.cn.public_class.ListNode;
 
 public class ReversalList206 {
    //让前两个结点互换位置，当前结点指向前一，然后依次往后移动指针，直到第二个结点为空结束，再处理链表头尾即可。

@@ -25,7 +25,7 @@ import com.cxy.brush.leetcode.editor.cn.public_class.ListNode;
  *     ListNode(int x) { val = x; }
  * }
  */
-class Solution {
+class Solution24 {
     public ListNode swapPairs1(ListNode head) {
 
         //退出条件: 没有节点或只有一个节点
@@ -118,7 +118,7 @@ class Solution {
         head.next.next = new ListNode(3);
         head.next.next.next = new ListNode(4);
         head.next.next.next.next = new ListNode(5);
-        new Solution().swapPairs(head);
+        new Solution24().swapPairs(head);
 
     }
 

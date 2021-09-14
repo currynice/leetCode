@@ -1,5 +1,7 @@
 package com.cxy.knowledge.list;
 
+import com.cxy.brush.leetcode.editor.cn.public_class.ListNode;
+
 import java.util.ArrayList;
 import java.util.List;
 

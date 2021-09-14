@@ -22,11 +22,12 @@ import java.util.Map;
 class Solution283 {
 
     public static void moveZeroes(int[] nums) {
-
+        // n 之前的元素都是非0
         int n=0;
         for(int i=0;i<nums.length;i++){
-            //非0就要
+            //留下非0
             if(nums[i]!=0){
+                //把非0的数 移给n
                 nums[n]=nums[i];
                 n++;
             }

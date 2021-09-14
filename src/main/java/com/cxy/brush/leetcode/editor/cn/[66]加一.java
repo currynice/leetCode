@@ -26,26 +26,29 @@ import java.util.Arrays;
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution66 {
+
+
+
     public int[] plusOne(int[] digits) {
 
-        //一般执行一次就return了, 如果执行多次，正好说明由于进位+1
-        for(int i = digits.length-1;i>=0;i--){
+        //最后一位加一，其余位 进位
+        for(int i=digits.length-1;i>=0;i--){
             digits[i]++;
             digits[i] %= 10;
-            //不需要进位
+            //不是10的话，便不需要进位
             if(digits[i]!=0){
                 return digits;
             }
         }
+
+
+        //检查是否需要扩容
         if(digits[0]==0){
-            //数组扩容,正好除了第一个元素外，其余元素都被初始化为0
             digits = new int[digits.length+1];
             digits[0] = 1;
-            return digits;
-        }else {
-            return digits;
         }
 
+        return digits;
     }
 
 }

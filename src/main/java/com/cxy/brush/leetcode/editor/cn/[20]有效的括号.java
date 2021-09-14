@@ -76,6 +76,7 @@ class Solution20 {
                 //右括号 需要 和弹出栈顶元素进行匹配
                 Character top = stack.isEmpty()?'#':stack.pop();
                 if(top!=mappings.get(c)){
+                    //不匹配的话 判定valid
                     return false;
                 }
             }

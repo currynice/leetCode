@@ -44,104 +44,92 @@ import java.util.Deque;
  * }
  */
 class Solution25 {
-    public  ListNode reverseKGroup0(ListNode head, int k) {
-        ListNode dummy = new ListNode(0);
-        dummy.next = head;
+
+
+    /**
+     * 解法一： k个一组，递归
+     * @param head
+     * @param k
+     * @return
+     */
+    ListNode reverseKGroup(ListNode head, int k) {
+        if (head == null) return null;
+
+        // 设置 区间 [start, end) , end-start <= k
+        ListNode start, end;
+        start = end = head;
+        for (int i = 0; i < k; i++) {
+            // 如果 [a，b）)不足k个，不进行反转了，结束
+            if (end == null) {
+                return head;
+            }
+            end = end.next;
+        }
+
+        // 反转这 k 个元素
+        ListNode newHead = reverse(start, end);
+        // 递归反转后续链表并连接起来
+        start.next = reverseKGroup(end, k);
+
+        return newHead;
+    }
+
+    /**
+     * 解法二.非递归方式
+     * @param head
+     * @param k
+     * @return
+     */
+    public  ListNode reverseKGroup1(ListNode head, int k) {
+        ListNode dummy = new ListNode(0,head);
+
         ListNode pre = dummy;
+
         ListNode end = dummy;
 
         while(end.next!=null){
-            // start 到 end即为待反转区，一次反转k个元素
-            for(int i=0;i<k&&end!=null;i++){
+            // 一次性要反转k个元素 ,考虑 k >end 的情况
+            for(int i=0;  i<k&&end!=null;i++){
                 end = end.next;
             }
             if(null ==end){
+                //不满k个就不用反转了
                 break;// or return dummy.next;
             }
             ListNode start = pre.next;
-            //更新未反转区
+            //保存未反转区起点
             ListNode unReverse = end.next;
 
-            //将待反转区和未反转区隔开
+            //断开 待反转链表 和 未反转链表
             end.next = null;
-            //待反转区开始反转
+            //反转待反转链表
             pre.next = reverse(start);
+
+
+            //移动指针
             start.next = unReverse;
+
             pre = start;
+
             end = pre;
         }
         return dummy.next;
 
     }
 
-    private  static ListNode reverse(ListNode head){
+
+
+    // 反转以 a 为头结点的链表
+    private  ListNode reverse(ListNode a) {
         ListNode pre = null;
-        ListNode cuur = head;
-        while(cuur!=null){
-            //记录反转后的部分
-            ListNode temp = cuur.next;
-            //反转
-            cuur.next = pre;
-            pre = cuur;
-            cuur = temp;
-        }
-        return pre;
-    }
+        ListNode cur = a;
 
-
-    //栈(k个元素压栈，出栈即可得到反转链表)
-    public ListNode reverseKGroup2(ListNode head, int k) {
-        Deque<ListNode> stack = new ArrayDeque<>();
-        ListNode dummy = new ListNode(0);
-        ListNode p = dummy;
-        while (true) {
-            int count = 0;
-            ListNode tmp = head;
-            while (tmp != null && count < k) {
-                stack.add(tmp);
-                tmp = tmp.next;
-                count++;
-            }
-            if (count != k) {
-                p.next = head;
-                break;
-            }
-            while (!stack.isEmpty()){
-                p.next = stack.pollLast();
-                p = p.next;
-            }
-            p.next = tmp;
-            head = tmp;
-        }
-        return dummy.next;
-    }
-
-
-
-//    // 反转以 a 为头结点的链表
-//    private  ListNode reverse(ListNode a) {
-//        ListNode pre, cur, nxt;
-//        pre = null; cur = a; nxt = a;
-//        while (cur != null) {
-//            nxt = cur.next;
-//            // 逐个结点反转
-//            cur.next = pre;
-//            // 更新指针位置
-//            pre = cur;
-//            cur = nxt;
-//        }
-//        // 返回反转后的头结点
-//        return pre;
-//    }
-
-    /** 反转区间 [a, b) 的元素 */
-    private ListNode reverse(ListNode a, ListNode b) {
-        ListNode pre, cur, nxt;
-        pre = null; cur = a; nxt = a;
-        // while 终止的条件改一下就行了
-        while (cur != b) {
-            nxt = cur.next;
+        while (cur != null) {
+            ListNode nxt = cur.next;
+            // 结点反转
             cur.next = pre;
+
+            // 移动指针位置
             pre = cur;
             cur = nxt;
         }
@@ -149,22 +137,46 @@ class Solution25 {
         return pre;
     }
 
-    ListNode reverseKGroup(ListNode head, int k) {
-        if (head == null) return null;
-        // 区间 [a, b) 包含 k 个待反转元素
-        ListNode a, b;
-        a = b = head;
-        for (int i = 0; i < k; i++) {
-            // 不足 k 个，不需要反转，base case
-            if (b == null) return head;
-            b = b.next;
+
+    /**
+     * 反转区间 [a, b) 的元素   1 > 2 > 3 > 4 > 5 > null,  反转[1，3) ，null < 1 < 2  3->4->null
+     */
+    private static ListNode reverse(ListNode start, ListNode end) {
+        ListNode pre = null;
+        ListNode cur = start;
+        // while 终止的条件改为 curr!=b
+        while (cur != end) {
+
+            ListNode nxt = cur.next;
+
+            cur.next = pre;
+
+            pre = cur;
+            cur = nxt;
         }
-        // 反转前 k 个元素
-        ListNode newHead = reverse(a, b);
-        // 递归反转后续链表并连接起来
-        a.next = reverseKGroup(b, k);
-        return newHead;
+        // 返回反转后的头结点
+        return pre;
     }
+
+    public static void main(String[] args) {
+        ListNode a = new ListNode(1);
+        a.next = new ListNode(2);
+        a.next.next = new ListNode(3);
+        a.next.next.next = new ListNode(4);
+        a.next.next.next.next = new ListNode(5);
+
+
+        ListNode b = a.next.next;
+
+
+        ListNode result = reverse(a,b);
+
+        System.out.println(result);
+
+    }
+
+
+
 
 
 

@@ -50,25 +50,26 @@ class MinStack {
 
 
     /*
-     * 两两等价
      * push(e)	addFirst(e)
      * pop()	removeFirst()
      * peek()	peekFirst()
      */
-    Deque<Integer>  dataStack = new ArrayDeque<>();
+    Deque<Integer>  dataStack;
 
-    Deque<Integer>  minStack = new ArrayDeque<>();
+    //辅助
+    Deque<Integer>  minStack;
 
 
-//    辅助栈为空的时候，必须放入新进来的数；
+//      对于辅助栈：    push:    ) 辅助栈为空的时候，顺带放入新进来的数；
 //
-//            （2）新来的数小于或者等于辅助栈栈顶元素的时候，才放入，特别注意这里“等于”要考虑进去，因为出栈的时候，连续的、相等的并且是最小值的元素要同步出栈；
+//                              ) 新来的数小于或者等于辅助栈栈顶元素的时候，也放入。 出栈的时候，连续相等的并且是最小值的元素要同步出栈；
 //
-//            （3）出栈的时候，辅助栈的栈顶元素等于数据栈的栈顶元素，才出栈。
+//                      pop：   出栈的时候，辅助栈的栈顶元素等于数据栈的栈顶元素，才出栈。
 
     /** initialize your data structure here. */
     public MinStack() {
-
+        dataStack =  new ArrayDeque<>();
+        minStack = new ArrayDeque<>();
     }
     
     public void push(int x) {
@@ -79,15 +80,10 @@ class MinStack {
     }
     
     public void pop() {
-        //同步出栈
-//        if(!dataStack.isEmpty()&&minStack.peek()==dataStack.pop()){
-//            minStack.pop();
-//      }
         if (!dataStack.isEmpty()) {
-            // 拆箱成 int 类型并 使用 "==" 运算符
-            // 比较Integer 类型的值，使用 equals 方法
+            // 这里 拆箱成 int 类型并 使用 "==" 运算符 ，或者使用 equals 方法比较Integer 类型
             int top = dataStack.pop();
-            if(top == minStack.peek()){
+            if(top == (int)minStack.peek()){
                 minStack.pop();
             }
         }

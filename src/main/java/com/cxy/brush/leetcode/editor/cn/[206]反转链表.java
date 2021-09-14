@@ -41,5 +41,25 @@ class Solution206 {
         }
         return pre;
     }
+
+
+    /**
+     * 递归
+     * @param head
+     * @return
+     */
+    public static ListNode reverseList2(ListNode head) {
+        //结点next是null，则说明当前节点是反转后的头节点
+        // 为null返回
+        ListNode newHead;
+        if (head == null || head.next == null) {
+            return head;
+        }
+        newHead = reverseList2(head.next); // head.next 作为剩余部分的头指针
+        // head.next 代表新链表的尾，将它的 next 置为 head，就是将 head 加到末尾了。
+        head.next.next = head;
+        head.next = null;
+        return newHead;
+    }
 }
 //leetcode submit region end(Prohibit modification and deletion)
