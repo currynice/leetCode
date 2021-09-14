@@ -22,6 +22,33 @@ import java.util.Map;
 class Solution283 {
 
     public static void moveZeroes(int[] nums) {
+
+        int n=0;
+        for(int i=0;i<nums.length;i++){
+            //非0就要
+            if(nums[i]!=0){
+                nums[n]=nums[i];
+                n++;
+            }
+        }
+        //补0
+        while(n < nums.length){
+            nums[n] =0;
+            n++;
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+        public static void moveZeroes2(int[] nums) {
         //双指针i,j
         int j = 0;
         for(int i=0;i<nums.length;i++){
