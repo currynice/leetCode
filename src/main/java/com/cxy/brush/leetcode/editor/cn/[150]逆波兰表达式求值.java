@@ -84,33 +84,38 @@ class Solution150 {
 
 
     /**
-     * 后缀表达式求值：  op A B
+     * 后缀表达式（逆波兰式）求值 (+ ,-,*, / 运算)
+     *
+     *  1 2 + 即相当于  1 + 2
+     *  4 2 / 即相当于  4 / 2
      * @param tokens
      * @return
      */
     public int evalRPN(String[] tokens) {
-        //遇到数字入栈（用符号来判断，否则数字判断表达式太长了【考虑负数】），遇到运算符出栈顶两个数字计算，结果压入栈
+        //维护数字栈
+        // 是否数字用符号来判断，否则数字(包括负数)判断表达式太长了）
+        // 遇到运算符出栈顶两个数字计算，并将结果压入栈
+
         List<String> operators = Arrays.asList("+","-","*","/");
 
-        Stack<String> stack = new Stack<>();
-
+        Stack<String> numStack = new Stack<>();
 
         for(String token:tokens){
             if(!operators.contains(token)){
-                //数字
-                stack.push(token);
+                //数字入栈
+                numStack.push(token);
             }else {
                 //遇到op， 出栈顶两个数字
-                // 因为 2,1,+ 相当于 2+1，即 num2 + num1
-                int num1 = Integer.parseInt(stack.pop());
-                int num2 = Integer.parseInt(stack.pop());
+                // 因为 1 2 + 相当于 1+2，即 num2 + num1
+                int num1 = Integer.parseInt(numStack.pop());
+                int num2 = Integer.parseInt(numStack.pop());
 
 
-                stack.push(eval(num2,num1,token)+"");
+                numStack.push(eval(num2,num1,token)+"");
             }
         }
 
-        return Integer.parseInt(stack.pop());
+        return Integer.parseInt(numStack.pop());
 
     }
 
@@ -132,7 +137,6 @@ class Solution150 {
         }else if(operators.equals("/")){
             return num1/num2;
         }
-
         return 0;
     }
 }

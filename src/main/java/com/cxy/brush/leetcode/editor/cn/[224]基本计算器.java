@@ -1,4 +1,6 @@
-package com.cxy.brush.leetcode.editor.cn;//给你一个字符串表达式 s ，请你实现一个基本计算器来计算并返回它的值。
+package com.cxy.brush.leetcode.editor.cn;
+
+//给你一个字符串表达式 s ，请你实现一个基本计算器来计算并返回它的值。
 //
 // 
 //
@@ -45,43 +47,57 @@ class Solution {
 
 
     /**
-     * 中缀表达式求值
-     * @param s
+     * 解法一: 表达式  转为 后缀表达式后求值
+     * @param s  可能包含的字符：数字、'+'、'-'、'('、')'、和 ' '
      * @return
      */
     public int calculate(String s) {
 
-        //维护运算符的栈，只要栈顶的符号优先级 >=当前符号(乘除 > 加减 > 左括号)，就不断取出栈顶并输出
-        // 遇到左括号，入栈
-        // 遇到右括号，不断取出栈顶并输出，直到栈顶为左括号，左括号出栈
-        // 最后把新符号入栈
+        // 维护运算符的栈，只要栈顶的符号优先级 >=当前符号(乘除 > 加减 > 左括号)，就不断取出栈顶并输出
+        // 遇到左括号，入栈，为了当遇到右括号时找到对应的左括号
+        // 遇到右括号，不断取出栈顶并输出，直到栈顶为左括号，（ps记得将左括号出栈）
+        //  其余符号正常入栈
+
         // 最终输出的序列就是一个等价的后缀表达式
 
         //处理负数，如果将'-'视为操作符，类似"-1+3"或"1+(-1+2)"类似的表达式，会有问题，因为-缺少左操作数，
         // 所以在 左括号后 ，先入一个0， 1+(0-1+2) 。
         // 操作符前先入一个0，  1+ -1 -> 1 + 0 -1 ;
-        //
 
 
+        //操作符栈
         Stack<Character> ops = new Stack<>();
+
+        //逆波兰式
         List<String> tokensList = new ArrayList<>();
 
+        //解析遇到的数字值
         long val =0;
-        //考虑到多个字符组成的数字
+
+        //考虑到多个字符可以组成数字的情况  12  334 等
         boolean parse_num = false;
 
         //考虑到正负数， 在 - 前补 0
         boolean need_zero = true;
 
         for(char ch:s.toCharArray()){
+            //如果ch是空格
+            if(ch==' '){
+                need_zero = false;
+                continue;
+            }
+
             if(ch>='0'&& ch<='9'){
-                // 字符转数字(可以处理 12，233)
+                //遇到数字，置 parse_num 为 true
                 parse_num=true;
                 val = val*10+ch-'0';
-                //继续
+
+                //当前字符处理完毕，判断下个字符
                 continue;
-            }else if(parse_num){
-                //非数字char，但已经开始解析数了，说明解析完了
+            }
+
+            if(parse_num){
+                // 已经开始解析数，且当前为非数字char，说明一个数字解析完成
                 // 如 12 + ，此时遇到2后面的空格，数字解析完成
                 // 或者 12+ ，此时遇到2后面的+，数字也算解析完成
                 //数字输出
@@ -91,15 +107,10 @@ class Solution {
                 parse_num = false;
             }
 
-            //如果ch是空格
-            if(ch==' '){
-                need_zero = false;
-                continue;
-            }
             //左括号，入栈
             if(ch=='('){
                 ops.push(ch);
-                //左括号前遇到
+                //左括号前需要补0
                 need_zero = true;
                 continue;
             }
@@ -116,10 +127,12 @@ class Solution {
                 continue;
             }
 
-            //判断级别,只要栈顶的符号优先级 >=当前符号，就不断取出栈顶并输出
+            //当前符号是 '+' 或 '-'，加入之前，如果 need_zero ，补0
+            // 0 -
             if(need_zero){
                 tokensList.add("0");
             }
+            //判断级别,只要栈顶的符号优先级 >=当前符号，就不断取出栈顶并输出
             while (!ops.isEmpty()&&rank(ops.peek())>=rank(ch)){
                 tokensList.add(ops.pop()+"");
             }
@@ -127,7 +140,7 @@ class Solution {
              need_zero = true;
         }
 
-        //如果最后一位是数字后面的空格,把前面解析的数字放入表达式
+        //如果最后一位是数字后面的空格, 把前面解析的数字放入表达式
         if(parse_num){
             tokensList.add(val+"");
         }
@@ -154,9 +167,18 @@ class Solution {
         return 0;
     }
 
-
+    /**
+     * 后缀表达式（逆波兰式）求值 (+ ,-,*, / 运算)
+     *
+     *  1 2 + 即相当于  1 + 2
+     *  4 2 / 即相当于  4 / 2
+     * @param tokens
+     * @return
+     */
     public int evalRPN(String[] tokens) {
-        //遇到数字入栈（用符号来判断，否则数字判断表达式太长了【考虑负数】），遇到运算符出栈顶两个数字计算，结果压入栈
+        //维护数字栈
+        // 是否数字用符号来判断，否则数字(包括负数)判断表达式太长了）
+        // 遇到运算符出栈顶两个数字计算，并将结果压入栈
         List<String> operators = Arrays.asList("+","-","*","/");
 
         Stack<String> stack = new Stack<>();
