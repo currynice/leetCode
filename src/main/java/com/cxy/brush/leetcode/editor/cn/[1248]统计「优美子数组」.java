@@ -67,6 +67,17 @@ class Solution {
 //        pre[j-1] 等于 pre[i] - k
 //
 //       解法：两层循环遍历得到 pre[j] - pre[i] == k的个数，时间复杂度 O(n^2)
+//        for(int r=1;r<n;r++){   //1 ~ n
+//            for(int l=1;l<=r;l++ ){
+//                //[l-r] 子数组
+//                if(pre[r]-pre[l-1]==k){
+//                    ans+=1;
+//                }
+//            }
+//        }
+
+//转化为  对于每个 i(1～n),考虑有几个 j（0～i-1）使得 pre[j]==pre[i]-k
+// 因为pre是单调递增的，因此 只要pre[i]-k >=0 , pre[j]就有对应的值
 
 
 //      优化：使用缓存优化到O(n) ，使用cnt数组统计S中每个值出现的次数
@@ -75,13 +86,13 @@ class Solution {
 //
 
 
-        //构建前缀和数组,
+        //构建前缀和数组
         int[] pre = new int[n];
         pre[0] = nums[0] &1;
 
         //下标是前缀和（即奇数的个数），值是出现次数。
         int[] cnt = new int[n+1];
-        //前缀和为0的，初始为 1个:  因为当 可以1个偶数都不取，所以不要忘了加1) 有错请指正（小白一个）
+        //前缀和为0的，初始为 1个:  cnt[0]=1, 相当于在-1的位置有一个奇数的效果，如果0这个位置是奇数，那么从c[0]维持1，而如果是偶数，c[0]=c[0]+1=2,就符合全局规则了
         cnt[0] = 1;
         cnt[pre[0]]++;
 
@@ -109,8 +120,8 @@ class Solution {
 
 
     public static void main(String[] args) {
-        int[] nums = {2,2,2,1,2,2,1,2,2,2};
-        new Solution().numberOfSubarrays(nums,2);
+        int[] nums = {1,1,2,1,1};
+        new Solution().numberOfSubarrays(nums,3);
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
