@@ -43,7 +43,7 @@ import java.util.*;
 import java.util.stream.Collector;
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
+class Solution224 {
 
 
     /**
@@ -230,7 +230,7 @@ class Solution {
         char c = '1';
         char c2 = '2';
 
-        System.out.println(new Solution().calculate("(1+(4+5+2)-3)+(6+8)"));
+        System.out.println(new Solution224().calculate("(1+(4+5+2)-3)+(6+8)"));
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
