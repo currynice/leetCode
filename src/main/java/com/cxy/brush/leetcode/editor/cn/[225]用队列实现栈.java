@@ -1,4 +1,6 @@
-package com.cxy.brush.leetcode.editor.cn;//使用队列实现栈的下列操作：
+package com.cxy.brush.leetcode.editor.cn;
+
+//使用队列实现栈的下列操作：
 //
 // 
 // push(x) -- 元素 x 入栈 
@@ -23,8 +25,10 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 //leetcode submit region begin(Prohibit modification and deletion)
+//先入后出
 class MyStack {
 
+    //队列
     private Queue<Integer> queue;
 
     /** Initialize your data structure here. */
@@ -32,7 +36,7 @@ class MyStack {
         queue = new LinkedList<>();
     }
     
-    /** Push element x onto stack. */
+    /** Push element x onto stack.入栈 */
     public void push(int x) {
 
             queue.offer(x);
@@ -55,6 +59,24 @@ class MyStack {
     /** Returns whether the stack is empty. */
     public boolean empty() {
         return queue.isEmpty();
+    }
+
+
+    public static void main(String[] args) {
+        MyStack stack = new MyStack();
+        stack.push(1);
+        stack.push(2);
+        stack.push(3);
+        stack.push(4);
+        stack.push(5);
+
+        //should be 5,4,3,2,1
+        System.out.println(stack.pop());
+        System.out.println(stack.pop());
+        System.out.println(stack.pop());
+        System.out.println(stack.pop());
+        System.out.println(stack.pop());
+
     }
 }
 
