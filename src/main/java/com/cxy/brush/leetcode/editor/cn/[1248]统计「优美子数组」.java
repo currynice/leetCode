@@ -41,7 +41,7 @@ package com.cxy.brush.leetcode.editor.cn;
 
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
+class Solution1248 {
 
     /**
      *
@@ -121,7 +121,7 @@ class Solution {
 
     public static void main(String[] args) {
         int[] nums = {1,1,2,1,1};
-        new Solution().numberOfSubarrays(nums,3);
+        new Solution1248().numberOfSubarrays(nums,3);
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
