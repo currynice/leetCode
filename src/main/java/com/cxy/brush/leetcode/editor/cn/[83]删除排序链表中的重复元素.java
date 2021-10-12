@@ -47,7 +47,7 @@ import com.cxy.brush.leetcode.editor.cn.public_class.ListNode;
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
-class Solution {
+class Solution83 {
 
     public ListNode deleteDuplicates(ListNode head) {
 
