@@ -33,6 +33,9 @@ package com.cxy.brush.leetcode.editor.cn;
 // 👍 728 👎 0
 
 import com.cxy.brush.leetcode.editor.cn.public_class.ListNode;
+import com.cxy.knowledge.recursion.Test1;
+
+import java.util.List;
 
 //leetcode submit region begin(Prohibit modification and deletion)
 
@@ -67,17 +70,20 @@ class Solution82 {
 
         ListNode cur = dummy;
 
-        while (cur.next != null && cur.next.next != null) {
-            if (cur.next.val == cur.next.next.val) {
-                //暂存 重复值
-                int x = cur.next.val;
-                while(cur.next != null && cur.next.val == x) {
+
+        while(cur.next !=null && cur.next.next !=null){
+
+            if(cur.next.val == cur.next.next.val){
+                int val_ = cur.next.val; //暂存值，后面只要等于这个值，全部删除
+                while(cur.next!=null && cur.next.val == val_){
                     cur.next = cur.next.next;
                 }
-            } else {
+            }else{
                 cur = cur.next;
             }
+
         }
+
 
         return dummy.next;
     }
