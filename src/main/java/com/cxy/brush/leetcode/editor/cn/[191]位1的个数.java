@@ -61,7 +61,7 @@ package com.cxy.brush.leetcode.editor.cn;
 
 
 //leetcode submit region begin(Prohibit modification and deletion)
-public class Solution {
+class Solution191 {
     // you need to treat n as an unsigned value
     public int hammingWeight(int n) {
         int count =0;

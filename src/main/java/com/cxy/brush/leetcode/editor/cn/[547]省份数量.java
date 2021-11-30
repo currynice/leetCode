@@ -1,4 +1,4 @@
-//
+package com.cxy.brush.leetcode.editor.cn;//
 // 
 // 有 n 个城市，其中一些彼此相连，另一些没有相连。如果城市 a 与城市 b 直接相连，且城市 b 与城市 c 直接相连，那么城市 a 与城市 c 间接相连
 //。 
@@ -45,7 +45,7 @@
 
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
+class Solution547 {
     public int findCircleNum(int[][] isConnected) {
         int provinces = isConnected.length;
         NormalUnionFind unionFind = new NormalUnionFind(provinces);
