@@ -27,83 +27,77 @@ import java.util.List;
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution15 {
-//    public static List<List<Integer>> threeSum(int[] nums) {
-//
-//        List<List<Integer>> result = new ArrayList<>();
-//        //todo 自己实现快排
-//        Arrays.sort(nums);
-//        for(int a=0;a<nums.length;a++) {
-//            if(a!=0 && nums[a]==nums[a-1]){
-//                continue;
-//            }
-//            //left不设置为1? 避免重复解
-//            int left = a+1, right = nums.length - 1;
-//            //left肯定小于right,等于时子数组只能提供一个元素，不满足条件
-//            while (left < right) {
-//                int sum = nums[a] + nums[left] + nums[right];
-//                if (sum<0) {
-//                    //子数组提供的元素和(left+right)小了,left右移
-//                    left++;
-//                } else if (sum>0) {
-//                    //子数组提供的元素和(left+right)大了,right左移
-//                    right--;
-//                } else {
-//                  //find a solve
-//                        result.add(Arrays.asList(nums[a],nums[left],nums[right]));
-//                        //这里也要去重
-//                    //因为已经匹配上了，所以如果 left右边 还是一样的值，那么肯定会重了
-//                    while (left<right && nums[left] == nums[left+1]) left++;
-//                    //因为已经匹配上了，所以如果right左边 还是一样的值，那么肯定会重了
-//                    while (left<right && nums[right] == nums[right-1]) right--;
-//
-//                    left++;
-//                    right--;
-//                }
-//            }
-//        }
-//        return result;
-//    }
+
+
+    public static void main(String[] args) {
+        int[] nums = new int[]{-2,0,3,-1,4,0,3,4,1,1,1,-3,-5,4,0};
+        List<List<Integer>> result = threeSum(nums);
+        System.out.println(Arrays.toString(result.toArray()));
+    }
+
+
     public static List<List<Integer>> threeSum(int[] nums) {
 
         List<List<Integer>> result = new ArrayList<>();
-        //todo 自己实现快排
+
+
+        if (nums == null || nums.length < 3) return result;
+
+
+        //排序
         Arrays.sort(nums);
-        for(int a=0;a<nums.length;a++) {
-            if(a!=0 && nums[a]==nums[a-1]){
+
+        for (int a = 0; a < nums.length; a++) {
+
+            //当前最小值都大于0，无解
+            if(nums[a]>0){
+                break;
+            }
+
+            //去重，举例 [-9,1,1,3,2,-6] , a=1:正常执行，a=2: 可以跳过
+            if (a > 0 && nums[a] == nums[a-1]) {
                 continue;
             }
-            //left不设置为1? 避免重复解
-            int left = a+1, right = nums.length - 1;
-            //left肯定小于right,等于时子数组只能提供一个元素，不满足条件
-            while (left < right) {
-                int sum = nums[a] + nums[left] + nums[right];
-                if (sum<0) {
-                    //子数组提供的元素和(left+right)小了,left右移
+
+            int left = a+1;  //待与nums[a] 成组
+            int right = nums.length -1; //待与nums[a] 成组
+
+            //当 left==right ，意味着只能提供一个元素,pass
+            while(left<right){
+                int total = nums[a] + nums[left] + nums[right];
+
+                if(total<0){
+                    // left+ right 太小了
                     left++;
-                } else if (sum>0) {
-                    //子数组提供的元素和(left+right)大了,right左移
+                }else if(total>0){
+                    // left+ right 太大了
                     right--;
-                } else {
-                    //find a solve
+
+                }else {
+                    //放入结果
                     result.add(Arrays.asList(nums[a],nums[left],nums[right]));
-                    //这里也要去重
-                    //因为已经匹配上了，所以如果 left右边 还是一样的值，那么肯定会重了
-                    while (left<right && nums[left] == nums[left+1]) left++;
-                    //因为已经匹配上了，所以如果right左边 还是一样的值，那么肯定会重了
-                    while (left<right && nums[right] == nums[right-1]) right--;
+
+                    //去重，尽可能内缩 left,right的区间
+                    while (left < right && nums[left]== nums[left+1]){
+                        left++;
+                    }
+
+                    while(left < right && nums[right]== nums[right-1]){
+                        right--;
+                    }
+
 
                     left++;
                     right--;
                 }
+
+
             }
+
         }
+
         return result;
     }
 
-    public static void main(String[] args) {
-        int[] nums = new int[]{0,0,0};
-        List<List<Integer>> result  =  threeSum(nums);
-        System.out.println(Arrays.toString(result.toArray()));
-    }
 }
 //leetcode submit region end(Prohibit modification and deletion)

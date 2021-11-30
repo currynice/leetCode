@@ -41,12 +41,10 @@ package com.cxy.brush.leetcode.editor.cn;
 // Related Topics 链表 双指针 
 // 👍 539 👎 0
 
+import com.cxy.brush.leetcode.editor.cn.public_class.ListNode;
 
 //leetcode submit region begin(Prohibit modification and deletion)
 
-//import com.cxy.brush.leetcode.editor.cn.public_class.ListNode;
-
-import com.cxy.brush.leetcode.editor.cn.public_class.ListNode;
 
 /**
  * Definition for singly-linked list.
@@ -62,14 +60,13 @@ import com.cxy.brush.leetcode.editor.cn.public_class.ListNode;
  class Solution142 {
     public ListNode detectCycle(ListNode head) {
         ListNode fast = head,slow = head;
-        if(head==null ||head.next==null){
-            return null;
-        }
+
         while(fast!=null && fast.next!=null){
             fast = fast.next.next;
             slow = slow.next;
+            //找到相遇点后，慢指针从head出发 ， fast指针从相遇点出发，速度相同，再次的相遇点就是 入环的第一个节点
             if(fast == slow){
-                slow =head;
+                slow = head;
                 while(slow!=fast){
                     slow = slow.next;
                     fast = fast.next;
@@ -77,6 +74,7 @@ import com.cxy.brush.leetcode.editor.cn.public_class.ListNode;
                 return slow;
             }
         }
+        // 无环，返回null
         return null;
     }
 }

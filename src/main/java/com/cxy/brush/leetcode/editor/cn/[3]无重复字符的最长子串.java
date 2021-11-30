@@ -26,35 +26,80 @@ package com.cxy.brush.leetcode.editor.cn;
 // 👍 3957 👎 0
 
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution3{
+
+
+    /**
+     * start指针枚举每一个字符
+     * 使用两个指针表示某个子串（窗口）的左右边界，start左指针代表着「子串的起始位置」，end右指针即该无重复子串的终结位置
+     *
+     * 每一步，将左指针向右移动一格，表示要将下一个字符作为起始位置了，
+     *        然后不断地向右移动右指针，始终保证窗口子串中没有重复的字符。
+     *        在移动结束后，根据这个子串的长度，更新结果
+     *
+     * 枚举结束后，返回最长的子串的长度
+     *
+     *
+     * @param s
+     * @return
+     */
     public  int lengthOfLongestSubstring(String s) {
 
         //corner case
-        int len = s.length();
-        if(len==0){
+        if(s==null || s.length()==0){
             return 0;
         }
 
-       int[] characterFreq = new int[256];
-        //init our two pointer
-        int start=0;
+        int length = s.length();
+
+
+        //最终的结果
         int result = 0;
-        for(int end=0;end<len;end++){
-              characterFreq[s.charAt(end)]++;
-              //先加再判断
-              while ( characterFreq[s.charAt(end)]>1){
-                  characterFreq[s.charAt(start)]--;
-                  start++;
+
+        //左指针
+        int start = 0;
+
+        //右指针
+        int end = -1;
+
+        //保证 start,end 维护的窗口代表的字符串是不重复的
+
+        // set 记录窗口对应 字符串 的字符，add 前用 contains 判断下，start 指针移动都需要及时清理
+        Set<Character> occ = new HashSet<>();
+
+        for(start=0;start<length;start++) {
+            if (start > 0) {
+                // 左指针移动了
+                // 维护occ ,清除不在窗口的字符对应记录
+                occ.remove(s.charAt(start - 1));
+            }
+            //试探end向右移的话，滑动窗口是否还满足条件(end试探位置的字符不在occ中，继续右移动)
+            //end 的移动范围 [start,length -1]
+            while( end<length-1 && !occ.contains(s.charAt(end+1))){
+                occ.add(s.charAt(end+1));
+                //这时才真正右移 end
+                end++;
             }
             result = Math.max(result,end-start+1);
         }
 
-        return  result;
+        return result;
     }
+
+
+
+
+
+    public static void main(String[] args) {
+        Solution3 s = new Solution3();
+        System.out.println(s.lengthOfLongestSubstring("abcabcbb"));
+    }
+
+
+
 
 
 }

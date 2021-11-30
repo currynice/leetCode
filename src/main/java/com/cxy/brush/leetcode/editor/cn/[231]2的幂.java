@@ -1,4 +1,5 @@
-//给定一个整数，编写一个函数来判断它是否是 2 的幂次方。 
+package com.cxy.brush.leetcode.editor.cn;
+//给定一个整数，编写一个函数来判断它是否是 2 的幂次方。
 //
 // 示例 1: 
 //
@@ -21,7 +22,7 @@
 
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
+class Solution231 {
 
     /**
      * 2的幂次方，二进制位仅有一个1，且不是末位  0....1..0

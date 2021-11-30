@@ -40,10 +40,10 @@ package com.cxy.brush.leetcode.editor.cn;
 // Related Topics 链表 双指针 
 // 👍 676 👎 0
 
+import com.cxy.brush.leetcode.editor.cn.public_class.ListNode;
 
 //leetcode submit region begin(Prohibit modification and deletion)
 
-import com.cxy.brush.leetcode.editor.cn.public_class.ListNode;
 
 /**
  * Definition for singly-linked list.

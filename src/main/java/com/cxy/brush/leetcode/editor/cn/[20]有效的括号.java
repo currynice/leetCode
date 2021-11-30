@@ -1,4 +1,5 @@
-package com.cxy.brush.leetcode.editor.cn;//给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串，判断字符串是否有效。
+package com.cxy.brush.leetcode.editor.cn;
+//给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串，判断字符串是否有效。
 //
 // 有效字符串需满足： 
 //
@@ -58,28 +59,34 @@ class Solution20 {
     }
 
     public boolean isValid(String s) {
-        //长度为奇数直接fasle
-        if(s.length()%2==1)return false;
-        Stack<Character> stack  = new Stack();
-        for(int i=0;i<s.length();i++){
-            char c = s.charAt(i);
-            //属于右括号
-            if (this.mappings.containsKey(c)) {
-
-                char topElement = stack.empty() ? '#' : stack.pop();
-
-                // If the mapping for this bracket doesn't match the stack's top element, return false.
-                if (topElement != this.mappings.get(c)) {
-                    return false;
-                }
-            } else {
-                //属于左括号,入栈
-                stack.push(c);
-            }
+        if(s.length() %2 ==1){
+            //奇数个字符肯定不合法
+            return false;
         }
 
-        // If the stack still contains elements, then it is an invalid expression.
+        Stack<Character> stack = new Stack<>();
+
+        for(int i=0;i<s.length();i++){
+            char c = s.charAt(i);
+
+            //左括号入栈
+            if(mappings.get(c)==null){
+                stack.push(c);
+            }else {
+                //右括号 需要 和弹出栈顶元素进行匹配
+                Character top = stack.isEmpty()?'#':stack.pop();
+                if(top!=mappings.get(c)){
+                    //不匹配的话 判定valid
+                    return false;
+                }
+            }
+
+        }
+
         return stack.isEmpty();
+
     }
+
+
 }
 //leetcode submit region end(Prohibit modification and deletion)

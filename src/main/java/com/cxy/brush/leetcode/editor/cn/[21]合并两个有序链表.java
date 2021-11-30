@@ -11,10 +11,9 @@ package com.cxy.brush.leetcode.editor.cn;
 // Related Topics 链表 
 // 👍 1148 👎 0
 
+import com.cxy.brush.leetcode.editor.cn.public_class.ListNode;
 
 //leetcode submit region begin(Prohibit modification and deletion)
-
-import com.cxy.brush.leetcode.editor.cn.public_class.ListNode;
 
 /**
  * Definition for singly-linked list.
@@ -26,21 +25,26 @@ import com.cxy.brush.leetcode.editor.cn.public_class.ListNode;
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
-class Solution21 {
+class Solution21{
+
     public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
-            if(l1==null){
-                return l2;
-            }
-            if(l2==null){
-                return l1;
-            }
-            if(l1.val< l2.val){
-                l1.next = mergeTwoLists(l1.next,l2);
-                return l1;
-            }else {
-                l2.next = mergeTwoLists(l1,l2.next);
-                return l2;
-            }
+        if(l1 ==null){
+            return l2;
+        }
+
+        if(l2==null){
+            return l1;
+        }
+
+        if(l1.val < l2.val){
+            l1.next = mergeTwoLists(l1.next,l2);
+            return l1;
+        }else{
+            l2.next = mergeTwoLists(l2.next,l1);
+            return l2;
+        }
+
     }
+
 }
 //leetcode submit region end(Prohibit modification and deletion)

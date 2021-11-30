@@ -1,5 +1,7 @@
 package com.cxy.knowledge.list;
 
+import com.cxy.brush.leetcode.editor.cn.public_class.ListNode;
+
 /**
  * 合并两个有序链表
  * list1:  1 3 5 7

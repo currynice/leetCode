@@ -22,6 +22,34 @@ import java.util.Map;
 class Solution283 {
 
     public static void moveZeroes(int[] nums) {
+        // n 之前的元素都是非0
+        int n=0;
+        for(int i=0;i<nums.length;i++){
+            //留下非0
+            if(nums[i]!=0){
+                //把非0的数 移给n
+                nums[n]=nums[i];
+                n++;
+            }
+        }
+        //补0
+        while(n < nums.length){
+            nums[n] =0;
+            n++;
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+        public static void moveZeroes2(int[] nums) {
         //双指针i,j
         int j = 0;
         for(int i=0;i<nums.length;i++){

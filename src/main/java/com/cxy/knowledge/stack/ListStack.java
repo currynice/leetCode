@@ -1,6 +1,8 @@
 package com.cxy.knowledge.stack;
 
 
+import com.cxy.brush.leetcode.editor.cn.public_class.ListNode;
+
 /**
  * 链表栈
  */

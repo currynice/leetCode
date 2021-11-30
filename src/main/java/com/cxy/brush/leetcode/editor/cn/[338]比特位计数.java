@@ -1,4 +1,4 @@
-//给定一个非负整数 num。对于 0 ≤ i ≤ num 范围中的每个数字 i ，计算其二进制数中的 1 的数目并将它们作为数组返回。 
+package com.cxy.brush.leetcode.editor.cn;//给定一个非负整数 num。对于 0 ≤ i ≤ num 范围中的每个数字 i ，计算其二进制数中的 1 的数目并将它们作为数组返回。
 //
 // 示例 1: 
 //
@@ -22,9 +22,9 @@
 
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
+class Solution338 {
     public int[] countBits(int num) {
-
+        return new int[num];
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
