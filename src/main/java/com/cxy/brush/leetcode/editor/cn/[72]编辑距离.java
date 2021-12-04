@@ -46,10 +46,8 @@ package com.cxy.brush.leetcode.editor.cn;//给你两个单词 word1 和 word2，
 // 👍 1423 👎 0
 
 
-import java.util.List;
-
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
+class Solution72 {
 
     /**
      * DP[i][j] 定义为word1前i个字符变更为word2前j个字符，最少需要的操作次数
