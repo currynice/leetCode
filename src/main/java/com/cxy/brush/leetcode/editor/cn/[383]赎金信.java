@@ -42,7 +42,7 @@ package com.cxy.brush.leetcode.editor.cn;//为了不在赎金信中暴露字迹�
 
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
+class Solution383 {
     public boolean canConstruct(String ransomNote, String magazine) {
         if(ransomNote.length()>magazine.length())
             return false;
@@ -71,7 +71,7 @@ class Solution {
     }
 
     public static void main(String[] args) {
-        new Solution().canConstruct("aa","ab");
+        new Solution383().canConstruct("aa","ab");
     }
 
 
