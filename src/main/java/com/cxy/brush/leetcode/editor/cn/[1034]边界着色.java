@@ -59,7 +59,7 @@ class Solution {
     // 左: x+int[1][0],y+int[1][1]
     // 上：x+int[2][0],y+int[2][1]
     // 下: x+int[3][0],y+int[3][1]
-    int[][] dirs = new int[][]{{1,0}, {-1,0}, {0,1}, {0,-1}};
+    int[][] around = new int[][]{{1,0},{-1,0},{0,1},{0,-1}};
 
 
     // 以 (row, col) 为起点，当遍历到「连通分量的边界」格子，使用 color 上色
@@ -76,32 +76,61 @@ class Solution {
      * @return
      */
     private int[][] bfsWay(int[][] grid, int row, int col, int color){
-        int m = grid.length, n = grid[0].length;
-        int[][] ans = new int[m][n];
-        int[][] dirs = new int[][]{{1,0}, {-1,0}, {0,1}, {0,-1}};
-        Deque<int[]> d = new ArrayDeque<>();
-        d.addLast(new int[]{row, col});
-        while (!d.isEmpty()) {
-            int[] poll = d.pollFirst();
-            int x = poll[0], y = poll[1], cnt = 0;
-            for (int[] di : dirs) {
-                int nx = x + di[0], ny = y + di[1];
-                if (nx < 0 || nx >= m || ny < 0 || ny >= n) continue;
-                if (grid[x][y] != grid[nx][ny]) continue;
-                else cnt++;
-                if (ans[nx][ny] != 0) continue;
-                d.addLast(new int[]{nx, ny});
-            }
-            ans[x][y] = cnt == 4 ? grid[x][y] : color;
-        }
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (ans[i][j] == 0) ans[i][j] = grid[i][j];
-            }
-        }
-        return ans;
+            int m = grid.length,n = grid[0].length;
+            int[][] res = new int[m][n];
 
-    }
+            //存放可能是连通分量格子
+            Deque<int[]> deque = new ArrayDeque<>();
+
+            deque.addLast(new int[]{row,col});
+
+            while(!deque.isEmpty()){
+                //当前探测的连通分量
+                int[] curr = deque.pollFirst();
+                int x = curr[0];
+                int y = curr[1];
+                //上下左右进行探测
+                //当前连通分量上下左右存在连通分量的个数
+                int num = 0;
+                for(int[] dire:around){
+                    int dx = x+dire[0];
+                    int dy = y+dire[1];
+
+                    //corner check
+                    if(dx<0 || dx>=m || dy<0 || dy>=n){
+                        continue;
+                    }
+                    //判断(dx,dy)格子是否是连通分量
+                    if(grid[dx][dy]!=grid[x][y]){
+                        continue;
+                    }else {
+                        num++;
+                    }
+                    //如果当前已经探测过，跳过
+                    if(res[dx][dy]!=0){
+                        continue;
+                    }
+                    //可能是连通分量，放入deque
+                    deque.addLast(new int[]{dx,dy});
+                }
+
+                //进行标色
+                //对边界上color色，其余保持原色（grid[row][col]）
+                res[x][y] = (num==4)?grid[row][col]:color;
+            }
+
+            //将bfs中遗漏的点补上原色
+            for (int i = 0; i < m; i++) {
+                for (int j = 0; j < n; j++) {
+                    if (res[i][j] == 0){
+                        res[i][j] = grid[i][j];
+                    }
+                }
+            }
+
+            return res;
+
+        }
 
 
     public static void main(String[] args) {
